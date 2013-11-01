@@ -1,0 +1,38 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:cfgval var="title" path="/select" attr="title" />
+	<adk:cfgval var="all" path="/select" attr="all" />
+
+	<adk:form name="frmSelect" action="select">
+		<input type="hidden" name="iid" />
+
+		<adk:func name="selectItem" param="iid" submit="yes" />
+	</adk:form>
+
+	<ul class="adk_ul_select">
+		<c:if test="${title ne null and title ne ''}">
+			<li><div>${title}</div></li>
+		</c:if>
+
+		<c:if test="${all eq 'yes' or all eq 'YES'}">
+			<adk:element elm="li">
+				<adk:attr name="class" value="selected" test="${SELECTED &lt;= 0}"/>
+				<a href="javascript:${adk:func('selectItem')}(0)"><div>全部</div></a>
+			</adk:element>
+		</c:if>
+
+		<c:forEach var="item" items="${LIST.items}">
+			<adk:element elm="li">
+				<adk:attr name="class" value="selected" test="${item.id eq SELECTED}"/>
+				<a href="javascript:${adk:func('selectItem')}(${item.id})"><div><![CDATA[${item.name}]]></div></a>
+			</adk:element>
+		</c:forEach>
+	</ul>
+</jsp:root>

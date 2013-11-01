@@ -1,0 +1,15 @@
+<jsp:root version="2.1"	xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk">
+	<jsp:directive.page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:form name="frmEdit" action="logout" method="post">
+	<table width="10%" align="center" border="0" cellspacing="1" cellpadding="4">
+		<tr height="2"></tr>
+		<tr><td align="right" nowrap="nowrap"><adk:text><adk:ls id="EN">Login ID：</adk:ls><adk:ls id="CN">登录帐号：</adk:ls></adk:text></td><td nowrap="nowrap">${u.id}</td></tr>
+		<tr><td align="right" nowrap="nowrap"><adk:text><adk:ls id="EN">User Name：</adk:ls><adk:ls id="CN">用户名称：</adk:ls></adk:text></td><td nowrap="nowrap">${u.name}</td></tr>
+		<tr><td colspan="2" align="center"><adk:text><adk:ls id="EN"><input type="submit" value="Logout"/></adk:ls><adk:ls id="CN"><input type="submit" value="退出登录"/></adk:ls></adk:text></td></tr>
+		<tr height="2"></tr>
+	</table>
+	</adk:form>
+</jsp:root>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strChannelName" />
+
+			<msg lsid="CN">请输入栏目的名称。</msg>
+			<msg lsid="EN">Please input channel name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strChannelName" />
+			<arg value="50" />
+
+			<msg lsid="CN">栏目名称不能超过50个字符。</msg>
+			<msg lsid="EN">Channel name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strPath" />
+
+			<msg lsid="CN">请输入栏目路径。</msg>
+			<msg lsid="EN">Please input channel path.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strPath" />
+			<arg value="50" />
+
+			<msg lsid="CN">栏目路径不能超过50个字符。</msg>
+			<msg lsid="EN">Channel path cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strEditRule" />
+
+			<msg lsid="CN">请输入编辑规则。</msg>
+			<msg lsid="EN">Please input edit rule.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strEditRule" />
+			<arg value="250" />
+
+			<msg lsid="CN">编辑规则不能超过250个字符。</msg>
+			<msg lsid="EN">Edit rule cannot exceed 250 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strPubRule" />
+
+			<msg lsid="CN">请输入发布规则。</msg>
+			<msg lsid="EN">Please input publish rule.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strPubRule" />
+			<arg value="250" />
+
+			<msg lsid="CN">发布规则不能超过250个字符。</msg>
+			<msg lsid="EN">Publish rule cannot exceed 250 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strAccessRule" />
+
+			<msg lsid="CN">请输入访问规则。</msg>
+			<msg lsid="EN">Please input access rule.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strAccessRule" />
+			<arg value="250" />
+
+			<msg lsid="CN">访问规则不能超过250个字符。</msg>
+			<msg lsid="EN">Access rule cannot exceed 250 characters.</msg>
+		</check>
+	</rule>
+</adb>

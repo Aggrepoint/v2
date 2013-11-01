@@ -1,0 +1,17 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- Configuration file for UI Validators -->
+
+<config>
+	<validator id="re" class="com.aggrepoint.adk.ui.validator.RegExp" />
+	<validator id="ne" class="com.aggrepoint.adk.ui.validator.NotEmpty" />
+	<validator id="gt" class="com.aggrepoint.adk.ui.validator.GreaterThan" />
+	<validator id="ge"
+		class="com.aggrepoint.adk.ui.validator.GreaterThanEqualTo" />
+	<validator id="lt" class="com.aggrepoint.adk.ui.validator.LowerThan" />
+	<validator id="le"
+		class="com.aggrepoint.adk.ui.validator.LowerThanEqualTo" />
+	<validator id="maxlen" class="com.aggrepoint.adk.ui.validator.MaxLen" />
+	<validator id="minlen" class="com.aggrepoint.adk.ui.validator.MinLen" />
+	<validator id="email" class="com.aggrepoint.adk.ui.validator.Email" />
+</config>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strLayoutName" />
+
+			<msg lsid="CN">请输入布局名称。</msg>
+			<msg lsid="EN">Please input layout name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strLayoutName" />
+			<arg value="100" />
+
+			<msg lsid="CN">布局名称不能超过100个字符。</msg>
+			<msg lsid="EN">Layout name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strContent" />
+
+			<msg lsid="CN">请输入布局内容。</msg>
+			<msg lsid="EN">Please input layout content.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strContent" />
+			<arg value="15000" />
+
+			<msg lsid="CN">布局内容不能超过15000个字符。</msg>
+			<msg lsid="EN">Layout content cannot exceed 15000 characters.</msg>
+		</check>
+	</rule>
+</adb>

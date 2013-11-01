@@ -1,0 +1,91 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<link rel="stylesheet" id="css" type="text/css"
+		href="${adk:resurl('/su/theme/edit.css')}" />
+	<script language="javascript" src="${adk:resurl('/su/script/drag.js')}">
+		function a() {
+		}
+	</script>
+
+	<p>
+		<button type="button" class="adk_btn adk_btnsilver__normal" onclick="window.open('/ap2/site${PAGE.fullPath}?_v=edit', '_blank')">可视化编辑</button>
+	</p>
+
+	<adk:form name="frmEdit" action="editContent">
+		<input type="hidden" name="cid" />
+		<adk:func name="editContent" param="cid" submit="yes" />
+	</adk:form>
+
+	<c:forEach var="area" items="${AREAS}">
+		<div id="area#${area}" class="adk_box adk_boxsilver">
+			栏位：${area}
+
+			<c:set var="layout" value="${adk:exec1(LAYOUTS, 'get', area)}" />
+			<c:set var="contents" value="${adk:exec1(PAGECONTS, 'get', area)}" />
+
+			<p>
+				<adk:form name="frmChangeLayout" action="changeLayout">
+					<c:choose>
+						<c:when test="${layout eq null}">
+							布局：没有
+							<!--
+							<button type="submit" class="adk_btn0 adk_btnsilver__normal">选择</button>
+							-->
+
+							<c:set var="zonecount" value="${0}" />
+						</c:when>
+						<c:otherwise>
+							布局：${layout.name}
+							<c:if test="${layout.previewImgId gt 0}">
+								<img src="/ap2/res/img?id=${layout.previewImgId}" />&amp;nbsp;
+							</c:if>
+							<!--
+							<button type="submit" class="adk_btn1 adk_btnsilver__normal">更改</button>
+							-->
+
+							<c:set var="zonecount" value="${layout.zoneCount}" />
+						</c:otherwise>
+					</c:choose>
+				</adk:form>
+			</p>
+
+			<su:pagezone zonecount="${zonecount}" contents="${contents}" />
+		</div>
+		<br />
+	</c:forEach>
+
+	<c:set var="others" value="${adk:exec1(PAGECONTS, 'get', '')}" />
+	<c:if test="${fn:length(others) gt 0}">
+		<div class="adk_box adk_boxsilver">
+			<p>
+				<font color="red"><b>栏位：不可见</b>
+				</font>
+			</p>
+
+			<c:forEach var="cont" items="${others}">
+				<su:pagecont cont="${cont}" />
+			</c:forEach>
+		</div>
+	</c:if>
+
+	<script language="javascript">
+		$(function() {
+			try {
+				AeEditDrag.init(function(cont, location) {
+				}, function() {
+				}, function() {
+				});
+			} catch (e) {
+				window.setTimeout(arguments.callee, 300);
+			}
+		});
+	</script>
+</jsp:root>

@@ -1,0 +1,45 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:编辑页面个性化名称@EN:Edit Personalized Page Name]">
+		<script language="javascript">
+		<adk:func name="addName"/>() {
+			$("#nameTable tr:last").after('&lt;tr&gt;&lt;td&gt;&lt;input type="text" size="15" name="name"&gt;&lt;/td&gt;&lt;td&gt;&lt;input type="text" size="60" name="rule"&gt;&lt;/td&gt;&lt;td&gt;&lt;button class="adk_btn0 adk_btnsilver__normal" onclick="${adk:func("removeName")}(this)" type="button"&gt;&lt;img align="absmiddle" border="0" src="/ap2/su/images/del.gif"/&gt;&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;');
+		}
+	
+		<adk:func name="removeName"/>(obj) {
+			$(obj).parent().parent().remove();
+		}
+		
+		$(function() {
+			${adk:func('addName')}();
+		});
+		</script>
+
+		<form name="frmEdit" action="/ap2/app/su/psnnamesave" method="post">
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+			<p>
+			[@CN:页面@EN:Page Name]: ${PAGE.name}
+			</p>
+
+			<table border="0" cellspacing="0" cellpadding="3" id="nameTable">
+				<tr><td nowrap="nowrap">[@CN:名称@EN:Name]</td><td nowrap="nowrap">[@CN:规则@EN:Rule]</td><td>&amp;nbsp;</td></tr>
+				<c:forEach var="psnName" items="${PAGE.psnNames}">
+					<tr>
+						<td><input type="text" size="15" name="name" value="${psnName.name}" /></td>
+						<td><input type="text" size="60" name="rule" value="${adk:htmlencode(psnName.accessRule)}" /></td>
+						<td><button class="adk_btn0 adk_btnsilver__normal" onclick="${adk:func('removeName')}(this)" type="button"><img align="absmiddle" border="0" src="/ap2/su/images/del.gif"/></button></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<button class="adk_btn0 adk_btnsilver__normal" onclick="${adk:func('addName')}()" type="button"><img align="absmiddle" border="0" src="/ap2/su/images/plus.gif"/></button>
+		</form>
+	</su:page>
+</jsp:root>

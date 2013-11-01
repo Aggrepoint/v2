@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strTmplName" />
+
+			<msg lsid="CN">请输入模板名称。</msg>
+			<msg lsid="EN">Please input template name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strTmplName" />
+			<arg value="50" />
+
+			<msg lsid="CN">模板名称不能超过50个字符。</msg>
+			<msg lsid="EN">Template name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strResRootURL" />
+			<arg value="100" />
+
+			<msg lsid="CN">静态资源URL长度不能超过100个字符。</msg>
+			<msg lsid="EN">Length of static resource root URL cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="int_in">
+			<arg property="m_iDocTypeID" />
+			<arg value="30, 31, 35, 36, 38, 39, 1030, 1031, 1035, 1036" />
+
+			<msg lsid="CN">类型不正确。</msg>
+			<msg lsid="EN">Invalid type.</msg>
+		</check>
+	</rule>
+</adb>

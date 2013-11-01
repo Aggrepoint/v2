@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strFrameName" />
+
+			<msg lsid="CN">请输入窗框名称。</msg>
+			<msg lsid="EN">Please input frame name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strFrameName" />
+			<arg value="50" />
+
+			<msg lsid="CN">窗框名称不能超过50个字符。</msg>
+			<msg lsid="EN">Frame name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strResRootURL" />
+			<arg value="100" />
+
+			<msg lsid="CN">静态资源URL长度不能超过100个字符。</msg>
+			<msg lsid="EN">Length of static resource root URL cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="int_in">
+			<arg property="m_iDocTypeID" />
+			<arg value="80, 81" />
+
+			<msg lsid="CN">类型不正确。</msg>
+			<msg lsid="EN">Invalid type.</msg>
+		</check>
+	</rule>
+</adb>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strBranchName" />
+
+			<msg lsid="CN">请输入站点分支的名称。</msg>
+			<msg lsid="EN">Please input branch name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strBranchName" />
+			<arg value="50" />
+
+			<msg lsid="CN">站点分支名称不能超过50个字符。</msg>
+			<msg lsid="EN">Branch name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strHomePath" />
+			<arg value="150" />
+
+			<msg lsid="CN">主页面路径不能超过150个字符。</msg>
+			<msg lsid="EN">Home page path exceed 150 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strLoginPath" />
+			<arg value="150" />
+
+			<msg lsid="CN">登录页面路径不能超过150个字符。</msg>
+			<msg lsid="EN">Login page path exceed 150 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strNoAccessPath" />
+			<arg value="150" />
+
+			<msg lsid="CN">无权访问页面路径不能超过150个字符。</msg>
+			<msg lsid="EN">No access page path exceed 150 characters.</msg>
+		</check>
+	</rule>
+</adb>

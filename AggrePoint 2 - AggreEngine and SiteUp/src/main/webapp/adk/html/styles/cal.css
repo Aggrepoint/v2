@@ -1,0 +1,14 @@
+.calendar{border-bottom-width:1px solid #A5C7E7;border-left-width:1px solid #A5C7E7;border-right-width:1px solid #A5C7E7;border-top-width:1px solid #A5C7E7;color:#000;margin:0px 0px 0px 0px;overflow:hidden;}
+.calendar table.cal{background-color:#A5C7E7;}
+.calendar table.content{background-color:#ffffff;}
+.calendar tr.headline{background-color:#DEEBF7;}
+.calendar td{cursor:default;font-size:11px;}
+.calendar .button__normal {cursor:pointer; border-style:solid;border-color: buttonface; border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .button__over { cursor:pointer; border-style:solid;border-color:white #000066 #000066 white;border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .button__down { cursor:pointer; border-style:solid;border-color:#000066 white white #000066;border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnhide__normal {cursor:pointer;border-style:solid;border-color:buttonface;border-bottom-width:1px;border-left-width:1px;border-right-width:1px;border-top-width:1px;padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnhide__over { cursor:pointer; border-style:solid;border-color:buttonface #000066 #000066 buttonface; border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnhide__down { cursor:pointer; border-style:solid;border-color:#000066 buttonface buttonface #000066; border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnsel__normal { cursor:pointer; background-color: #A5C7E7;border-style:solid;border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnsel__over { cursor:pointer; background-color: #A5C7E7; border-style:solid;border-color:buttonface #000066 #000066 buttonface; border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}
+.calendar .btnsel__down { cursor:pointer; background-color: #A5C7E7; border-style:solid;border-color:#000066 buttonface buttonface #000066; border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px}

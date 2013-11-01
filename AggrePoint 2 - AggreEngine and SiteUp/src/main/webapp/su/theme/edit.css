@@ -1,0 +1,19 @@
+.ae_page_highlight {border-style: dotted; border-width: 2px; border-color:red;}
+
+.ae_border {border-style: none; position: absolute; height: 100%; width: 100%;}
+.ae_border_highlight {border-style: dotted; border-width: 2px; border-color:red; position: absolute; height: 100%; width: 100%;}
+
+.ae_drag { margin: 0px; padding: 0px; position: absolute; }
+.ae_drop { margin: 0px; padding: 0px; height: 10px; background-color: #00ff00; min-width: 10px; width: auto !important; width: 10px;}
+.ae_area { position:relative; top: -17px; left: -17px}
+.ae_area > div.opac {  border-style: dotted; border-width: 1px; position: absolute; background-color: #E3ECFF; height: 100%; width: 100%}
+.ae_area > div.solid {padding: 8px; position: relative}
+.ae_zone { position:relative}
+.ae_zone > div.opac { border-style: dotted; border-width: 1px; position: absolute; background-color: #B7CDFF; height: 100%; width: 100%}
+.ae_zone > div.solid {padding: 8px; position: relative}
+.ae_window { position:relative; min-height: 10px; height: auto !important; height: 10px; min-width: 10px; width: auto !important; width: 10px}
+.ae_window > div.opac { border-style: dotted; border-width: 1px; position: absolute; background-color: white; height: 100%; width: 100%}
+.ae_window > div.solid {padding: 1px; position: relative}
+.ae_content { position:relative; min-height: 10px; height: auto !important; height: 10px; min-width: 10px; width: auto !important; width: 10px}
+.ae_content > div.opac { border-style: dotted; border-width: 1px; position: absolute; background-color: white; height: 100%; width: 100%}
+.ae_content > div.solid {padding: 1px; position: relative}

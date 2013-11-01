@@ -1,0 +1,73 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:jstree name="tmpltree" rootid="0" />
+
+	<script type="text/javascript">
+	<![CDATA[
+	$(function () {
+   		if ($("#${adk:encodens('tmpltree')}").jstree == undefined)
+   			window.setTimeout(arguments.callee, 300);
+   		else {
+			$("#${adk:encodens('tmpltree')}").jstree({
+				"json_data" : {
+					"data" : [{
+							"attr" : {
+								"id" : "0",
+								"rel": "root"},
+							"data" : {
+								"title" : "模板",
+								"attr" : { "href" : "javascript:${adk:func('selectNode')}(0)"}},
+							"state" : "closed"}],
+					"ajax" : {
+						"url" : "${adk:resproxy('getNodeContent')}",
+						"data" : function (n) { 
+							return { 
+								nid : n.attr ? n.attr("id") : 0, 
+								rand : new Date().getTime()
+							}; 
+						}
+					}
+				},
+				"types" : {
+					"valid_children" : [ "root" ],
+					"types" : {
+						"root" : {
+							"valid_children" : [ "bpage", "cpage", "list" ]
+						},
+						"bpage" : {
+							"icon" : {"image" : "${adk:resurl('/su/images/site.gif')}"},
+							"valid_children" : [ "tmpl" ]
+						},
+						"cpage" : {
+							"icon" : {"image" : "${adk:resurl('/su/images/map.gif')}"},
+							"valid_children" : [ "tmpl" ]
+						},
+						"list" : {
+							"icon" : {"image" : "${adk:resurl('/su/images/list.gif')}"},
+							"valid_children" : [ "tmpl" ]
+						},
+						"tmpl" : {
+							"icon" : {"image" : "${adk:resurl('/su/images/tmpl.gif')}"},
+							"valid_children" : [ "default" ]
+						},
+						"default" : {
+							"valid_children" : [ "default" ]
+						}
+					}
+				},
+				"plugins" : [ "themes", "json_data", "types", "cookies" ],
+				"cookies" : {save_opened: "${adk:encodens('tmpltree')}_opened", save_selected: "${adk:encodens('tmpltree')}_selected"}
+			});
+   		}
+	});
+	]]>
+	</script>
+</jsp:root>

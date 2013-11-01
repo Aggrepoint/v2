@@ -1,0 +1,88 @@
+<!-- 
+	Common List Page
+	2008/10/30
+
+	Inputs
+		1) Expect ADBList named "LIST" in request.
+		2) Return Code Configuration
+			<retcode>
+				<msg id="id" lsid="lsid(optional)" markup="markup(optional)">message content</msg>
+		
+				<button type="global or select" id="button id" action="button action(optional)" resource="resource to pop(optional)" image="button image(optional)" showcheck="" form="link or button">
+					<name lsid="lsid(optional)">button name</name>
+					<tips lsid="lsid(optional)">tips on image</tips>
+
+					below data are optional and for select only
+					<nosel lsid="lsid(optional)">message to dispay if no selection</nosel>
+					<confirm lsid="lsid(optional)">message to display before submit</confirm>
+				</button>
+
+				<button type="row" id="button id" action="button action" image="button image(optional)" flag="flag for showing the button(optional)">
+					<name lsid="lsid(optional)">button name</name>
+					<tips lsid="lsid(optional)">tips on image</tips>
+
+					<param id="param id" property="property to retrive value from"/>
+					<confirm lsid="lsid(optional)">message to display before submit</confirm>
+				</button>
+
+				<list group="ui property group(optional)" navsize="page navigation size(optional)"
+					seltype="checkbox or radio(optional)" selprop="property name">
+					<link id="link id" property="property name(optional, if empty then generate link on line)" action="link action">
+						<param id="param id" property="property to retrive value from"/>
+					</link>
+				</list>
+			</retcode>
+		
+			button type:
+				global
+					button generated outside of the list table.
+					tiggers an action without any parameter.
+				select
+					button generated outside of the list table.
+					require radio or check box included in the list able, default is check box
+					submit the radio or check box while trigger the action.
+					* currently only support 1 select button (the action of the first select button
+						will be used as action of the form that surrounds the table)
+				row
+					button generated in list table row.
+					triggers an action with parameters defined inside.
+			
+			button form:
+				currently only applicable to global buttons.
+				button
+					this is the default value when resource property is not specified. when resource 
+					property is specified, ignore this value and always use anchor
+				link
+					use anchor to generate the button. when resource property is specified, always
+					use anchor
+
+			button id:
+				should be unique in all buttons within the page
+				
+			check box or radio in list:
+				generate check box or radio in the list when there's at least one select button defined.
+				if the seltype value is checkbox then generate checkbox, otherwise generate radio button.
+				the id and value of checkbox or radio are from the property specified by selprop.
+			
+			link id:
+				should be unique in all links within the page
+ -->
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+	<adk:markup type="html" />
+
+	<adkhtml:list>
+		<!-- provides the style for rows in table -->
+		<jsp:attribute name="rowClass">adk_line adk_linesilver__normal</jsp:attribute>
+		<!-- provides the id for rows in table -->
+		<jsp:attribute name="rowId"></jsp:attribute>
+		<!-- prvoides the flags for row buttons -->
+		<jsp:attribute name="rowFlags"></jsp:attribute>
+	</adkhtml:list>
+</jsp:root>

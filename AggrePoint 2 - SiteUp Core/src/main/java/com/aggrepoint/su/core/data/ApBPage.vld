@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strPathName" />
+
+			<msg lsid="CN">请输入页面路径。</msg>
+			<msg lsid="EN">Please input page path.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strPageName" />
+
+			<msg lsid="CN">请输入页面名称。</msg>
+			<msg lsid="EN">Please input page name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strPathName" />
+			<arg value="50" />
+
+			<msg lsid="CN">页面路径不能超过50个字符。</msg>
+			<msg lsid="EN">Page path cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strPageName" />
+			<arg value="120" />
+
+			<msg lsid="CN">页面名称不能超过120个字符。</msg>
+			<msg lsid="EN">Page name cannot exceed 120 characters.</msg>
+		</check>
+	</rule>
+
+	<rule name="branch">
+		<check validator="str_required">
+			<arg property="m_strPathName" />
+
+			<msg lsid="CN">请输入分支根路径。</msg>
+			<msg lsid="EN">Please input branch root path.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strPathName" />
+			<arg value="50" />
+
+			<msg lsid="CN">分支根路径不能超过50个字符。</msg>
+			<msg lsid="EN">Branch root path cannot exceed 50 characters.</msg>
+		</check>
+	</rule>
+</adb>

@@ -1,0 +1,41 @@
+.cmenu {font-family:"雅黑", "宋体", Tahoma, Verdana; font-size:small; margin:0px;border-style:solid;border-width:1px;border-color:#A5C7E7;color:#000000;overflow:hidden;}
+.cmenu tr{cursor:pointer}
+.cmenu td{padding:3px}
+.cmenu .highlight td{background-color:#C5DBEF;}
+.cmenu .normal td.img{background-color:#DEEBF7;}
+.cmenu .normal td{background-color:#FFFFFF;}
+.cmenu .expand{font-family: "wingdings 3";}
+.cmenu .line{background-color:#A5C7E7;height:1px;padding:0px;}
+.cmenu .text{background-color:#A5C7E7;}
+
+table.adk_table {border-collapse: collapse; border-top: 1px solid #666666; color: #363636; background: #cccccc; text-align:left;}
+table.adk_table thead th {padding:2px; background:url(images/gloss1.png) repeat-x left center; text-align:center; height:25px; border-bottom:1px solid #D0D0D0; border-left:1px solid #D0D0D0;}
+* html table.adk_table thead th {background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/mlimgs/gloss1.png", sizingMethod='scale')}
+table.adk_table thead th span.up {background:url(images/up.gif) no-repeat right center; padding:3px 16px 3px 0px;}
+table.adk_table thead th span.down {background:url(images/down.gif) no-repeat right center; padding:3px 16px 3px 0px;}
+table.adk_table thead th.sortable_over {background: url(images/gloss.png) repeat-x left center; cursor:pointer; background-color: #cccccc;}
+* html table.adk_table thead th.sortable_over {background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/mlimgs/gloss.png", sizingMethod='scale')}
+table.adk_table thead th.sortable_down {background: url(images/gloss.png) repeat-x left center; cursor:pointer; background-color: #aaaaaa;}
+* html table.adk_table thead th.sortable_down {background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/mlimgs/gloss.png", sizingMethod='scale')}
+
+table.adk_table table.hideoverflow {table-layout:fixed}
+table.adk_table table.hideoverflow td {text-overflow:ellipsis;overflow:hidden}
+
+table.adk_table > tbody > tr {background: url(images/gloss3.png) repeat-x left bottom; height:26px; background-color: #EDEDED;}
+* html table.adk_table tbody tr {background-color: #eeeeee}
+table.adk_table > tbody > tr.over {background-color: #CED3DE;}
+table.adk_table > tbody > tr.editing {background-color: #7CBD7C;}
+* html table.adk_table tbody tr.editing {background-color: #7CBD7C}
+table.adk_table > tbody > tr > td {border-bottom:1px solid white; border-left:1px solid white; padding: 3px;}
+* html table.adk_table tbody td {background-image: url(/mlimgs/gloss2.png);}
+*:first-child+html table.adk_table > tbody > tr > td {padding: 0px 2px 0px 2px;}
+table.adk_table > tbody > tr > td.editable {cursor:pointer}
+
+span.adk_iconsel {background:url(images/down.gif) no-repeat right center; padding:3px 16px 3px 0px; cursor:pointer;}
+* html span.adk_iconsel {padding: 0px 16px 0px 0px;}
+*:first-child+html span.adk_iconsel {padding: 0px 16px 0px 0px;}
+
+
+.adk_valfailed {background:url(images/stop.png) no-repeat left center; padding: 2px 0px 2px 20px; margin: 0px 1px 0px 1px; color:#7C0000}
+.adk_valpassed {background:url(images/go.png) no-repeat left center; padding: 2px 0px 2px 20px; margin: 0px 1px 0px 1px}
+.adk_validating {background:url(images/validate.gif) no-repeat left center; padding: 2px 0px 2px 20px; margin: 0px 1px 0px 1px}

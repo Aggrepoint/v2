@@ -1,0 +1,62 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+	<adk:markup type="html" />
+
+	<adk:cfgnodes var="btn" path="/foot/button|type=global">
+		<adk:form name="frm${adk:cfgval(btn, 'id')}"
+			action="${adk:cfgval(btn, 'action')}">
+			<adk:func name="btn_${adk:cfgval(btn, 'id')}" submit="yes" />
+		</adk:form>
+	</adk:cfgnodes>
+
+	<adk:cfgval var="action" path="/foot/button|type=submit" attr="action" />
+	<adk:cfgval var="editGroup" path="/edit" attr="group" />
+	<adk:cfgval var="showman" path="/edit" attr="showmandatory" />
+	<adk:cfgval var="enctype" path="/edit" attr="enctype" />
+	<adk:cfgval var="ajaxValidate" path="/edit" attr="validate" />
+	<adk:cfgval var="includePage" path="/edit" attr="include" />
+
+	<adk:tbody>
+	<adk:form name="frmEdit" action="${action}" enctype="${enctype}" tipclz="tooltip" tipsel=":input[title]" tipcfg="position: 'center right', offset: [-2, 35], effect: 'fade', opacity: 0.7" vaction="${ajaxValidate}">
+		<adk:cfgmsg id="title"/>
+		<c:forTokens items="${editGroup}" delims=", " var="currGroup" varStatus="status">
+			<c:forEach var="prop" items="${adk:uiprops(EDIT, null, currGroup)}">
+				<dl class="adk_dl_line">
+					<dt>${prop.label}:</dt>
+					<dd><adkhtml:genedit prop="${prop}" showmandatory="${showman}"/></dd>
+				</dl>
+			</c:forEach>
+		</c:forTokens>
+		<dl class="adk_dl_line">&amp;nbsp;</dl>
+		<c:if test="${includePage ne null and includePage ne ''}">
+			<jsp:include page="${includePage}" />
+		</c:if>
+
+		<center>
+			<adk:cfgnodes var="btn" path="/foot/button">
+				<c:choose>
+					<c:when test="${adk:cfgval(btn, 'type') == 'global'}">
+						<c:set var="funcName" value="btn_${adk:cfgval(btn, 'id')}" />
+						<button type="button" class="adk_btn adk_btnsilver__normal" onclick="${adk:func(funcName)}()">${adk:cfgval(btn, 'name')}</button>
+					</c:when>
+					<c:when test="${adk:cfgval(btn, 'type') == 'submit'}">
+						<button type="submit" class="adk_btn adk_btnsilver__normal">${adk:cfgval(btn, 'name')}</button>
+					</c:when>
+					<c:when test="${adk:cfgval(btn, 'type') == 'reset'}">
+						<button type="reset" class="adk_btn adk_btnsilver__normal">${adk:cfgval(btn, 'name')}</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="adk_btn adk_btnsilver__normal">${adk:cfgval(btn, 'name')}</button>
+					</c:otherwise>
+				</c:choose>
+			</adk:cfgnodes>
+		</center>
+	</adk:form>
+	</adk:tbody>
+</jsp:root>

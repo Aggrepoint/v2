@@ -1,0 +1,24 @@
+<jsp:root version="2.1"	xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk">
+	<jsp:directive.page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:form name="frmEdit" action="login" method="post" focus="id">
+	<table width="10%" align="center" border="0" cellspacing="1" cellpadding="4">
+		<tr height="2"></tr><c:if test="${m.m_strErrorMsg != null}" >
+		<tr><td colspan="2"><font color="red">${m.m_strErrorMsg}</font></td></tr></c:if>
+		<tr><td align="right" nowrap="nowrap"><adk:text><adk:ls id="EN">Login ID:</adk:ls><adk:ls id="CN">帐号名称：</adk:ls></adk:text></td><td><input type="text" name="id" size="8"/></td></tr>
+		<tr><td align="right" nowrap="nowrap"><adk:text><adk:ls id="EN">Password:</adk:ls><adk:ls id="CN">登录口令：</adk:ls></adk:text></td><td><input type="password" name="pwd" size="8"/></td></tr>
+		<tr><td align="right" nowrap="nowrap"><adk:text><adk:ls id="EN">Save Session:</adk:ls><adk:ls id="CN">登录有效期：</adk:ls></adk:text></td><td><select name="keep">
+		<option value="0"><adk:text><adk:ls id="EN">Don't Save</adk:ls><adk:ls id="CN">本次访问</adk:ls></adk:text></option>
+		<option value="1"><adk:text><adk:ls id="EN">One Week</adk:ls><adk:ls id="CN">一星期</adk:ls></adk:text></option>
+		<option value="2"><adk:text><adk:ls id="EN">One Month</adk:ls><adk:ls id="CN">一个月</adk:ls></adk:text></option>
+		<option value="3"><adk:text><adk:ls id="EN">One Year</adk:ls><adk:ls id="CN">一年</adk:ls></adk:text></option>
+		</select></td></tr>
+		<tr><td colspan="2" align="center">
+		<adk:text><adk:ls id="EN"><input type="submit" value="Login"/></adk:ls><adk:ls id="CN"><input type="submit" value="登录"/></adk:ls></adk:text>
+		</td></tr>
+		<tr height="2"></tr>
+	</table>
+	</adk:form>
+</jsp:root>

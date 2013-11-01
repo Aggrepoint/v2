@@ -1,0 +1,23 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- Configuration file for Database Source -->
+<!--
+ URL for DB2:
+ 	jdbc:db2:ap2
+ 	jdbc:db2://localhost:50000/ap2
+ Class for DB2:
+ 	COM.ibm.db2.jdbc.app.DB2Driver (type I)
+ 	com.ibm.db2.jcc.DB2Driver
+ 
+ URL for Oracle:
+ 	jdbc:oracle:thin:@localhost:1521:ap2
+ Class for Oracle:
+ 	oracle.jdbc.driver.OracleDriver
+ -->
+<config>
+	<source id="direct" name="env(APDBURL, jdbc:db2:ap2)" user="env(APDBUSER, db2admin)"
+		password="env(APDBPWD, db2admin)"
+		class="com.icebean.core.conn.db.DirectSource">
+		<param name="driver" value="env(APDBDRIVER, com.ibm.db2.jcc.DB2Driver)" isdefault="yes" />
+	</source>
+</config>

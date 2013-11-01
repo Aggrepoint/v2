@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+
+<!-- Configuration file for Property Loader -->
+<config>
+	<loader name="default" class="com.aggrepoint.adk.ui.UIConfigLoaderDefaultImpl" default="yes">
+		<param name="extension" value="ui.adb" />
+	</loader>
+</config>

@@ -1,0 +1,19 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:include var="tree" winlet="${m.tree}" view="" />
+	<adk:include var="man" winlet="${m.man}" view="main" />
+
+	<table width="100%" align="center" border="0" cellspacing="1" cellpadding="2">
+		<tr>
+			<td width="0%" valign="top">${tree}</td>
+			<td width="100%" valign="top">${man}</td>
+		</tr>
+	</table>
+</jsp:root>

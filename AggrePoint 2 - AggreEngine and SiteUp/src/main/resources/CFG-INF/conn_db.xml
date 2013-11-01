@@ -1,0 +1,14 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- Configuration file for Database Source -->
+<config>
+	<source id="ap" name="java:comp/env/jdbc/ap"
+		class="com.icebean.core.conn.db.PoolSource" monitor_stmt_num="0"
+		conn_dump_time="0" stmt_dump_time="0" isdefault="yes">
+	</source>
+
+	<source id="direct" name="jdbc:db2:ap_dev1" user="db2admin"
+		password="jimdb2jimdb2" class="com.icebean.core.conn.db.DirectSource">
+		<param name="driver" value="com.ibm.db2.jcc.DB2Driver" />
+	</source>
+</config>

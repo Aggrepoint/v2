@@ -1,0 +1,54 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:选择内容分类@EN:Select Content Category]">
+		<style type="text/css">
+			ul.adk_ul_select li a {width: 500px}
+		</style>
+
+		<form id="frmSel" name="frmSel" action="/ap2/app/su/contins_sel" method="post">
+			<input type="hidden" name="pid" value="${PAGEID}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+			<input type="hidden" name="container" value="${CONTAINER}" />
+			<input type="hidden" id="cid" name="cid" value="0" />
+		</form>
+
+		<script type="text/javascript">
+			function selectCat(id) {
+				document.frmSel.cid.value = id;
+				document.frmSel.submit();
+			}
+		</script>
+
+		<p>
+		选择内容类别:
+		</p>
+
+		<ul class="adk_ul_select">
+			<c:forEach var="cat" items="${ROOT_CATS}">
+			  	<li>
+			  		<a href="javascript:selectCat(${cat.id})"><div>
+					    全局:${cat.name}
+					  <p>${cat.desc}</p>
+			  		</div></a>
+			    </li>
+			</c:forEach>
+			<c:forEach var="cat" items="${CATS}">
+			  	<li>
+			  		<a href="javascript:selectCat(${cat.id})"><div>
+					    站点:${cat.name}
+					  <p>${cat.desc}</p>
+			  		</div></a>
+			    </li>
+			</c:forEach>
+		</ul>
+	</su:page>
+</jsp:root>

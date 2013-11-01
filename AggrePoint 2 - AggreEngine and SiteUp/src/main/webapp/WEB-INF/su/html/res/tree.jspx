@@ -1,0 +1,47 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:jstree name="restree" rootid="${ROOT.id}" />
+
+	<c:set var="state" value="${adk:if(ROOT.hasChild, 'closed')}"/>
+
+	<script type="text/javascript">
+	<![CDATA[
+	$(function () {
+   		if ($("#${adk:encodens('restree')}").jstree == undefined)
+   			window.setTimeout(arguments.callee, 300);
+   		else {
+   			$("#${adk:encodens('restree')}").jstree({
+				"json_data" : {
+					"data" : [{
+							"attr" : {
+								"id" : "${ROOT.id}"},
+							"data" : {
+								"title" : "${ROOT.fullPath}",
+								"attr" : { "href" : "${selRoot}"}},
+							"state" : "${state}"}],
+					"ajax" : {
+						"url" : "${adk:resproxy('content')}",
+						"data" : function (n) { 
+							return { 
+								nid : n.attr ? n.attr("id") : 0, 
+								rand : new Date().getTime()
+							}; 
+						}
+					}
+				},
+   				"plugins" : [ "themes", "json_data", "cookies" ],
+   				"cookies" : {save_opened: "${adk:encodens('restree')}_${ROOT.id}_opened", save_selected: "${adk:encodens('restree')}_${ROOT.id}_selected"}
+   			});
+   		}
+	});
+	]]>
+	</script>
+</jsp:root>

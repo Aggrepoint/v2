@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strContCatName" />
+
+			<msg lsid="CN">请输入分类名称。</msg>
+			<msg lsid="EN">Please input category name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strContCatName" />
+			<arg value="50" />
+
+			<msg lsid="CN">分类名称不能超过50个字符。</msg>
+			<msg lsid="EN">Category name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strContCatDesc" />
+			<arg value="10000" />
+
+			<msg lsid="CN">分类说明不能超过10000个字符。</msg>
+			<msg lsid="EN">Category description cannot exceed 10000 characters.</msg>
+		</check>
+	</rule>
+</adb>

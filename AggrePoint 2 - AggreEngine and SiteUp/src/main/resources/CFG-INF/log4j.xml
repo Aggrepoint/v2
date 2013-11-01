@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="LOG_STDOUT"
+		class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="LOG_ROLL"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="D:\\Tomcat 6.0\\logs\\ap.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] - %m%n" />
+		</layout>
+	</appender>
+
+	<category name="com.aggrepoint.ae.plugin.AELogger"
+		additivity="false">
+		<priority value="debug" />
+		<appender-ref ref="LOG_STDOUT" />
+		<!-- <appender-ref ref="LOG_ROLL" /> -->
+	</category>
+
+	<root>
+		<priority value="info" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</log4j:configuration>

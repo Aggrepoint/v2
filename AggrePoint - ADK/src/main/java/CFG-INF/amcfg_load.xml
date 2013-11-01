@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+
+<!-- Configuration file for Property Loader -->
+<config>
+	<loader name="default" class="com.icebean.core.prop.PropertyLoaderDefaultImpl" default="yes">
+		<param name="extension" value="cfg" />
+	</loader>
+</config>

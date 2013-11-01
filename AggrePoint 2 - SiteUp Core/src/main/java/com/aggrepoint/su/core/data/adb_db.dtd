@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+  元素：
+      自动数据对象定义
+  属性：
+      table				对应的数据库表名称
+      timestamp			时间戳字段名称
+      synctimeout		对象的同步有效期，以秒为单位
+      listsynctimeout	对象列表的同步有效期，以秒为单位
+-->
+<!ELEMENT adb (propdef*, subbean*, sublist*, action*, retrieve*, retrievemulti*, create*, update*, delete*, proc*)>
+<!ATTLIST adb
+          table CDATA #REQUIRED
+          timestamp CDATA #IMPLIED
+          synctimeout CDATA #IMPLIED
+          listsynctimeout CDATA #IMPLIED
+          debug CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      普通对象属性定义。普通对象属性对应数据库表的字段
+  属性：
+      property		属性名称。可以是字段名称，或Java Bean属性名称
+      column		对应的数据库字段名称
+      length		如果该属性是BLOB属性，则用于指明BLOB长度的属性的名称
+      null			NULL对应的特殊值，格式为：value@type，其中value为特殊值，type为字段类型，取值如INTEGER，FLOAT等，具体参考java.sql.Types
+      blob			是否为blob属性
+      clob			是否为clob属性
+      primary		是否主键字段
+      r				是否参与生成缺省的retrieve方法
+      rm			是否参与生成缺省的retrievemulti方法
+      c				是否参与生成缺省的insert方法
+      u				是否参与生成缺省的update方法
+      d				是否参与生成缺省的delete方法
+      sequence		若该属性的取值来源于数值序列，则用于指明相应数值序列的名称
+-->
+<!ELEMENT propdef EMPTY>
+<!ATTLIST propdef
+          property ID #REQUIRED
+          column CDATA #IMPLIED
+          length CDATA #IMPLIED
+          null CDATA #IMPLIED
+          blob (yes|no) "no"
+          clob (yes|no) "no"
+          primary (yes|no) "no"
+          r (yes|no) "yes"
+          rm (yes|no) "yes"
+          c (yes|no) "yes"
+          u (yes|no) "yes"
+          d (yes|no) "yes"
+          sequence CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      主表对象属性定义。主表对象属性的取值是一个自动数据对象，可用于表示
+  属性：
+      property		属性名称。可以是字段名称，或Java Bean属性名称，属性值必须不为null，而且类型为AutoDataBean的派生类
+      r				是否参与生成缺省的retrieve方法
+      rm			是否参与生成缺省的retrievemulti方法
+      c				是否参与生成缺省的insert方法
+      u				是否参与生成缺省的update方法
+      d				是否参与生成缺省的delete方法
+      rid			缺省使用的主表对象加载方法编号
+      cid			缺省使用的主表对象插入方法编号
+      uid			缺省使用的主表对象更新方法编号
+      did			缺省使用的主表对象删除方法编号
+-->
+<!ELEMENT subbean (propref)>
+<!ATTLIST subbean
+          property ID #REQUIRED
+          r (yes|no) "no"
+          rm (yes|no) "no"
+          c (yes|no) "no"
+          u (yes|no) "no"
+          d (yes|no) "no"
+          rid CDATA ""
+          cid CDATA ""
+          uid CDATA ""
+          did CDATA ""
+>
+
+<!--
+  元素：
+      子表对象列表属性定义。子表对象列表属性为Collection类型，其中存放自动数据对象
+  属性：
+      property		属性名称。必须是Collection类型，属性值必须不为null
+      type			子表数据对象的类型
+      r		是否参与生成缺省的retrieve方法
+      rm	是否参与生成缺省的retrievemulti方法
+      c		是否参与生成缺省的insert方法
+      u		是否参与生成缺省的update方法
+      d		是否参与生成缺省的delete方法
+      rmid			缺省使用的子表对象列表加载方法编号
+      oid		缺省使用的子表对象列表加载排序方法编号
+      cid			缺省使用的子表对象列表插入方法编号
+      uid			缺省使用的子表对象列表更新方法编号
+      did			缺省使用的子表对象列表删除方法编号
+-->
+<!ELEMENT sublist (propref+)>
+<!ATTLIST sublist
+          property ID #REQUIRED
+          type CDATA #REQUIRED
+          r (yes|no) "no"
+          rm (yes|no) "no"
+          c (yes|no) "no"
+          u (yes|no) "no"
+          d (yes|no) "no"
+          rmid CDATA ""
+          oid CDATA ""
+          cid CDATA ""
+          uid CDATA ""
+          did CDATA ""
+>
+
+<!--
+  元素：
+      动作定义
+  属性：
+      
+-->
+<!ELEMENT action EMPTY>
+<!ATTLIST action
+          name ID #REQUIRED
+          method CDATA #REQUIRED
+          desc CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      单对象加载方法定义
+  属性：
+      
+-->
+<!ELEMENT retrieve (key?, get?, order*, trigger*)>
+<!ATTLIST retrieve
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          table CDATA #IMPLIED
+          where CDATA #IMPLIED
+          sql CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          timestamp CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+          debug CDATA #IMPLIED
+          cache CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      多对象加载方法定义
+  属性：
+      
+-->
+<!ELEMENT retrievemulti (key?, get?, group*, order*, trigger*)>
+<!ATTLIST retrievemulti
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          table CDATA #IMPLIED
+          where CDATA #IMPLIED
+          sql CDATA #IMPLIED
+          count CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          timestamp CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+          debug CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      插入方法定义
+  属性：
+      
+-->
+<!ELEMENT create (set?, trigger*)>
+<!ATTLIST create
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          table CDATA #IMPLIED
+          sql CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+          debug CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      更新方法定义
+  属性：
+      
+-->
+<!ELEMENT update (key?, set?, trigger*)>
+<!ATTLIST update
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          table CDATA #IMPLIED
+          where CDATA #IMPLIED
+          sql CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+          debug CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      删除方法定义
+  属性：
+      
+-->
+<!ELEMENT delete (key?, del?, trigger*)>
+<!ATTLIST delete
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          table CDATA #IMPLIED
+          where CDATA #IMPLIED
+          sql CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+          debug CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      SQL过程定义
+  属性：
+      
+-->
+<!ELEMENT proc (sql+, trigger*)>
+<!ATTLIST proc
+          id CDATA #REQUIRED
+          atom (yes|no) "yes"
+          desc CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      属性关联定义
+  属性：
+      
+-->
+<!ELEMENT propref EMPTY>
+<!ATTLIST propref
+          this CDATA #REQUIRED
+          ref CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      关键值
+  属性：
+      
+-->
+<!ELEMENT key (property*, exists*, notexists*, or*, not*)>
+<!ELEMENT and (property*, or*, not*)>
+<!ATTLIST and
+          flag CDATA #IMPLIED
+          when CDATA #IMPLIED
+>
+<!ELEMENT or (property*, and*, not*)>
+<!ATTLIST or
+          flag CDATA #IMPLIED
+          when CDATA #IMPLIED
+>
+<!ELEMENT not (property*, or*, not*)>
+<!ATTLIST not
+          flag CDATA #IMPLIED
+          when CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      需要获取的属性
+  属性：
+      
+-->
+<!ELEMENT get (property+)>
+
+<!--
+  元素：
+      需要设置的属性
+  属性：
+      
+-->
+<!ELEMENT set (property+)>
+
+<!--
+  元素：
+      触发器定义
+  属性：
+      
+-->
+<!ELEMENT trigger EMPTY>
+<!ATTLIST trigger
+          action IDREF #REQUIRED
+          event CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      多值加载方法的排序选项定义
+  属性：
+      
+-->
+<!ELEMENT order EMPTY>
+<!ATTLIST order
+          id CDATA #REQUIRED
+          value CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      多值加载方法的组合选项定义
+  属性：
+      
+-->
+<!ELEMENT group EMPTY>
+<!ATTLIST group
+          id CDATA #REQUIRED
+          value CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      删除方法中连带删除的子表
+  属性：
+      
+-->
+<!ELEMENT del (property+)>
+
+<!--
+  元素：
+      SQL语句定义
+  属性：
+      
+-->
+<!ELEMENT sql (stmt+, replace?, key?)>
+
+<!--
+  元素：
+      属性引用定义
+  属性：
+      
+-->
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+          mode (add|minus) "add"
+          name IDREF #REQUIRED
+          column CDATA #IMPLIED
+          flag CDATA #IMPLIED
+          match CDATA #IMPLIED
+          val CDATA #IMPLIED
+          when CDATA #IMPLIED
+          seq CDATA #IMPLIED
+          mid CDATA #IMPLIED
+          oid CDATA #IMPLIED
+          desc CDATA #IMPLIED
+          tablealias CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      存在条件
+  属性：
+      
+-->
+<!ELEMENT exists (property*, or*, not*)>
+<!ATTLIST exists
+          table CDATA #REQUIRED
+          where CDATA #REQUIRED
+>
+
+<!ELEMENT notexists (property*, or*, not*)>
+<!ATTLIST notexists
+          table CDATA #REQUIRED
+          where CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      
+  属性：
+      
+-->
+<!ELEMENT stmt (#PCDATA) >
+<!ATTLIST stmt
+          syntax CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      
+  属性：
+      
+-->
+<!ELEMENT replace (property*) >

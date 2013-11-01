@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strSiteName" />
+
+			<msg lsid="CN">请输入站点名称。</msg>
+			<msg lsid="EN">Please input site name.</msg>
+			<msg flag="sys" lsid="CN">站点名称为空</msg>
+			<msg flag="sys" lsid="EN">Site name is empty.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strManageRule" />
+
+			<msg lsid="CN">请输入站点管理规则。</msg>
+			<msg lsid="EN">Please input site manage rule.</msg>
+			<msg flag="sys" lsid="CN">站点管理规则为空</msg>
+			<msg flag="sys" lsid="EN">Site manage rule is empty.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strSiteName" />
+			<arg value="100" />
+
+			<msg lsid="CN">站点名称不能超过100个字符。</msg>
+			<msg lsid="EN">Site name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strSiteDesc" />
+			<arg value="1024" />
+
+			<msg lsid="CN">站点说明不能超过1024个字符。</msg>
+			<msg lsid="EN">Site description cannot exceed 1024 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strManageRule" />
+			<arg value="512" />
+
+			<msg lsid="CN">站点管理规则不能超过512个字符。</msg>
+			<msg lsid="EN">Site manage rule cannot exceed 512 characters.</msg>
+		</check>
+	</rule>
+</adb>

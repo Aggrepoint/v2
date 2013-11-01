@@ -1,0 +1,62 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<c:choose>
+		<c:when test="${m.m_bSelectLayout}">
+			选择布局：
+
+			<style type="text/css">
+				ul.adk_ul_select li {float: left; margin: 2px}
+				ul.adk_ul_select li div { text-align: center }
+				ul.adk_ul_select li a {background:url(/ap2/su/images/gloss3.png) repeat-x scroll left center transparent; width: 150px; height: 130px;}
+				ul.adk_ul_select li a {background-color: #E9E9E9;}
+			</style>
+	
+			<adk:form name="frmSelLayout" action="selectLayout">
+				<input type="hidden" id="layoutid" name="layoutid" value="0" />
+				<adk:func name="selLayout" param="layoutid" submit="yes" />
+			</adk:form>
+	
+			<adk:form name="frmChangeLayout" action="changeLayout">
+				<ul class="adk_ul_select">
+					<c:if test="${LAYOUT.id gt 0}">
+						<li><a href="javascript:${adk:func('selLayout')}(0)"><div>清除布局</div></a></li>
+					</c:if>
+					<c:forEach var="layout" items="${LAYOUTS}">
+					  	<c:set var="selected" value=""/>
+					  	<c:if test="${layout.id == LAYOUT.id}">
+					  		<c:set var="selected" value="selected"/>
+					  	</c:if> 
+		
+					  	<li class="${selected}">
+					  		<a href="javascript:${adk:func('selLayout')}(${layout.id})"><div>
+						    ${layout.name}
+						    <c:if test="${layout.previewImgId gt 0}">
+						    	<br/>
+						    	<img border="0" src="/ap2/res/img?id=${layout.previewImgId}"/>
+						    </c:if>
+						    </div></a>
+					    </li>
+					</c:forEach>
+				</ul>
+				<div style="clear:both">&amp;nbsp;</div>
+				<button type="submit" class="adk_btn adk_btnsilver__normal">取消</button>
+			</adk:form>
+		</c:when>
+		<c:otherwise>
+			<adk:form name="frmChangeLayout" action="changeLayout">
+				布局：${adk:ifelse(LAYOUT eq null, '没有', LAYOUT.name)}
+				<c:if test="${LAYOUT.previewImgId gt 0}">
+					<img src="/ap2/res/img?id=${LAYOUT.previewImgId}"/>&amp;nbsp;
+				</c:if>
+				<button type="submit" class="adk_btn adk_btnsilver__normal">${adk:ifelse(LAYOUT eq null, '选择', '更改')}</button>
+			</adk:form>
+		</c:otherwise>
+	</c:choose>
+</jsp:root>

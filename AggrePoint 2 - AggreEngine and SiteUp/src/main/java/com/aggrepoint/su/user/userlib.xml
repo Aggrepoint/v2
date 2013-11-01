@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<userlib>
+	<user id="1b99d7e316a6ed7ac3189a789673025e" password="1b99d7e316a6ed7ac3189a789673025e">
+		<property name="su_roles" value="root" />
+		<property name="name" value="JM" />
+	</user>
+
+	<user id="c31f804a0e4a8943a7a5577a292f2321" password="a6169cd04dfa57509b83a5c08289086c">
+		<property name="su_roles" value="root" />
+		<property name="name" value="Admin" />
+	</user>
+</userlib>

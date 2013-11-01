@@ -1,0 +1,58 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:编辑页面个性化模版@EN:Edit Personalized Page Template]">
+		<form name="frmEdit" action="/ap2/app/su/psntmpleditsave" method="post">
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+
+			<p>
+			[@CN:页面@EN:Page Name]: ${PAGE.name}
+			</p>
+
+			<table border="0" cellspacing="0" cellpadding="2" width="100%" id="nameTable">
+				<tr>
+					<td width="10%" nowrap="nowrap">[@CN:模版@EN:Template]</td>
+					<td width="90%" nowrap="nowrap">[@CN:规则@EN:Rule]</td>
+				</tr>
+				<c:set var="count" value="0" />
+				<c:forEach var="psnTmpl" items="${PAGE.psnTmpls}">
+					<c:set var="count" value="${count + 1}" />
+					<tr>
+						<td>
+							<select name="tmplid">
+								<c:forEach var="tmpl" items="${TEMPLATES}">
+									<adk:element elm="option" value="${tmpl.id}">
+										<adk:attr name="selected" value="selected" test="${tmpl.id eq psnTmpl.templateId}"/>
+										${tmpl.name}
+									</adk:element>
+								</c:forEach>
+							</select>
+						</td>
+						<td><input type="text" size="60" name="rule" value="${psnTmpl.accessRule}" /></td>
+					</tr>
+				</c:forEach>
+				<c:forEach var="i" begin="${count + 1}" end="5" step="1">
+					<tr>
+						<td>
+							<select name="tmplid">
+								<c:forEach var="tmpl" items="${TEMPLATES}">
+									<option value="${tmpl.id}">
+										${tmpl.name}
+									</option>
+								</c:forEach>
+							</select>
+						</td>
+						<td><input type="text" size="60" name="rule" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
+	</su:page>
+</jsp:root>

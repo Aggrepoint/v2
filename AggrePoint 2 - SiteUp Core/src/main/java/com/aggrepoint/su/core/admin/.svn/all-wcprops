@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin
+END
+ImportSite.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/icebean/!svn/ver/33/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/ImportSite.java
+END
+ExportHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/icebean/!svn/ver/32/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/ExportHelper.java
+END
+InitUserAgent.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/InitUserAgent.java
+END
+MovePage.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/MovePage.java
+END
+ua.txt
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/ua.txt
+END
+ExportSite.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/ExportSite.java
+END
+DeleteSite.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/DeleteSite.java
+END
+UUIDInit.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/icebean/!svn/ver/5/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core/admin/UUIDInit.java
+END

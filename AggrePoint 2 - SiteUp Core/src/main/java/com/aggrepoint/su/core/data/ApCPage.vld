@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strTitle" />
+
+			<msg lsid="CN">请输入标题。</msg>
+			<msg lsid="EN">Please input title.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strTitle" />
+			<arg value="100" />
+
+			<msg lsid="CN">标题不能超过100个字符。</msg>
+			<msg lsid="EN">Title cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strSource" />
+			<arg value="50" />
+
+			<msg lsid="CN">信息来源不能超过50个字符。</msg>
+			<msg lsid="EN">Source cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_required" flag="file">
+			<arg property="m_strFile" />
+
+			<msg lsid="CN">请输入资源文件。</msg>
+			<msg lsid="EN">Please input file.</msg>
+		</check>
+
+		<check validator="str_required" flag="url">
+			<arg property="m_strContent1" />
+
+			<msg lsid="CN">请输入URL。</msg>
+			<msg lsid="EN">Please input URL.</msg>
+		</check>
+	</rule>
+</adb>

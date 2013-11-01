@@ -1,0 +1,7 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- Configuration file for ADB -->
+<config>
+	<param name="synctimeout" value="3" />
+	<param name="listsynctimeout" value="3" />
+</config>

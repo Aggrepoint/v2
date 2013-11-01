@@ -1,0 +1,31 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:input="urn:jsptagdir:/WEB-INF/tags/adk/html/input">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:form name="frmCancel" action="cancelTemplateEdit">
+		<adk:func name="cancel" submit="yes" />
+	</adk:form>
+
+	<adk:form name="frmSave" action="doCarwl" vaction="doCarwl" resetref="${m.m_strCrawlUrl}">
+	<table width="100%" align="center" border="0" cellspacing="1" cellpadding="2">
+		<tr>
+			<td width="10%" align="right">URL:</td>
+			<td>
+				<input:text name="name" property="m_strCrawlUrl" size="100" maxlength="100" error="请输入抓取URL。" validate="validateCrawl" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<button type="submit">抓取</button>
+				<button type="button" onclick="${adk:func('cancel')}()">取消</button>
+			</td>
+		</tr>
+	</table>
+	</adk:form>
+</jsp:root>

@@ -1,0 +1,40 @@
+10
+
+dir
+5
+http://localhost:3380/svn/icebean/AggrePoint%202%20-%20SiteUp%20Core/src/com/aggrepoint/su/core
+http://localhost:3380/svn/icebean
+
+
+
+2011-05-04T17:59:04.013054Z
+5
+jim
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cc48be91-36f4-f44f-8752-ad92fe6dc6f5
+
+daemon
+dir
+
+admin
+dir
+
+api
+dir
+
+data
+dir
+

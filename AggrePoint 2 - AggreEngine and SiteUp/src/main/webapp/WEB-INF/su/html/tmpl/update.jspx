@@ -1,0 +1,37 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:input="urn:jsptagdir:/WEB-INF/tags/adk/html/input">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:form name="frmCancel" action="cancelTemplateEdit">
+		<adk:func name="cancel" submit="yes" />
+	</adk:form>
+
+	<adk:form name="frmSave" action="saveTemplate" vaction="saveTemplate" resetref="${EDIT}" enctype="multipart/form-data">
+	<table width="100%" align="center" border="0" cellspacing="1" cellpadding="2">
+		<tr>
+			<td width="10%" align="right">模板名称: </td>
+			<td width="23%">
+				${EDIT.name}
+			</td>
+		</tr>
+		<tr>
+			<td align="right" valign="top">模板包: </td>
+			<td>
+				<input:file name="upload" width="30" validate="validate" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="6" align="center">
+				<button type="submit">上传</button>
+				<button type="button" onclick="${adk:func('cancel')}()">取消</button>
+			</td>
+		</tr>
+	</table>
+	</adk:form>
+</jsp:root>

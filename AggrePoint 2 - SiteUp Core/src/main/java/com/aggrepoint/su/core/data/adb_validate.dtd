@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='gb2312'?>
+
+<!--
+  元素：
+      自动数据对象定义
+-->
+<!ELEMENT adb (locale_set*, propdef*, subbean*, sublist*, action*, validate*)>
+
+<!--
+  元素：
+      Locale集定义
+  属性:
+      id
+-->
+<!ELEMENT locale_set (locale*)>
+<!ATTLIST locale_set
+          id ID #REQUIRED
+>
+
+<!ELEMENT locale EMPTY>
+<!ATTLIST locale
+          value CDATA #REQUIRED
+>
+
+<!ELEMENT propdef (name*, validator*)>
+<!ATTLIST propdef
+          property ID #REQUIRED
+          file (yes|no) "no"
+          default (yes|no) "yes"
+>
+
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name
+          lsid IDREF #REQUIRED
+>
+
+<!ELEMENT validator (arg*)>
+<!ATTLIST validator
+          name CDATA #REQUIRED
+          msg CDATA ""
+>
+
+<!ELEMENT arg EMPTY>
+<!ATTLIST arg
+          value CDATA #REQUIRED
+>
+
+<!ELEMENT subbean EMPTY>
+<!ATTLIST subbean
+          property ID #REQUIRED
+          default (yes|no) "no"
+          vmid CDATA ""
+>
+
+<!ELEMENT sublist EMPTY>
+<!ATTLIST sublist
+          property ID #REQUIRED
+          default (yes|no) "no"
+          vmid CDATA ""
+>
+
+<!--
+  元素：
+      动作定义
+  属性：
+      
+-->
+<!ELEMENT action EMPTY>
+<!ATTLIST action
+          name ID #REQUIRED
+          method CDATA #REQUIRED
+          desc CDATA #IMPLIED
+>
+
+<!ELEMENT validate (check?, trigger*)>
+<!ATTLIST validate
+          id CDATA #REQUIRED
+          ondefault (yes|no) "yes"
+          desc CDATA #IMPLIED
+>
+
+<!--
+  元素：
+      关键值
+  属性：
+      
+-->
+<!ELEMENT check (property+)>
+
+<!--
+  元素：
+      触发器定义
+  属性：
+      
+-->
+<!ELEMENT trigger EMPTY>
+<!ATTLIST trigger
+          action IDREF #REQUIRED
+          event CDATA #REQUIRED
+>
+
+<!--
+  元素：
+      属性引用定义
+  属性：
+      
+-->
+<!ELEMENT property (name*, validator*)>
+<!ATTLIST property
+          name IDREF #REQUIRED
+          mode (add|minus) "add"
+          desc CDATA #IMPLIED
+          vmid CDATA ""
+>

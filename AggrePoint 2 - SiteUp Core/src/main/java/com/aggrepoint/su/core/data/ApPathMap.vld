@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strFromPath" />
+
+			<msg lsid="CN">请输入正向映射模式。</msg>
+			<msg lsid="EN">Please input from path.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strFromPath" />
+			<arg value="100" />
+
+			<msg lsid="CN">正向映射模式不能超过100个字符。</msg>
+			<msg lsid="EN">From path cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strToPath" />
+
+			<msg lsid="CN">请输入正向映射路径。</msg>
+			<msg lsid="EN">Please input to path.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strToPath" />
+			<arg value="100" />
+
+			<msg lsid="CN">正向映射路径不能超过100个字符。</msg>
+			<msg lsid="EN">To path cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strFromLink" />
+
+			<msg lsid="CN">请输入反向映射模式。</msg>
+			<msg lsid="EN">Please input from link.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strFromLink" />
+			<arg value="100" />
+
+			<msg lsid="CN">反向映射模式不能超过100个字符。</msg>
+			<msg lsid="EN">From link cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strToLink" />
+
+			<msg lsid="CN">请输入反向映射路径。</msg>
+			<msg lsid="EN">Please input to link.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strToLink" />
+			<arg value="100" />
+
+			<msg lsid="CN">反向映射路径不能超过100个字符。</msg>
+			<msg lsid="EN">To link cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strParamName1" />
+			<arg value="100" />
+
+			<msg lsid="CN">参数名称不能超过100个字符。</msg>
+			<msg lsid="EN">Parameter name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strParamName2" />
+			<arg value="100" />
+
+			<msg lsid="CN">参数名称不能超过100个字符。</msg>
+			<msg lsid="EN">Parameter name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strParamName3" />
+			<arg value="100" />
+
+			<msg lsid="CN">参数名称不能超过100个字符。</msg>
+			<msg lsid="EN">Parameter name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strParamName4" />
+			<arg value="100" />
+
+			<msg lsid="CN">参数名称不能超过100个字符。</msg>
+			<msg lsid="EN">Parameter name cannot exceed 100 characters.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strParamName5" />
+			<arg value="100" />
+
+			<msg lsid="CN">参数名称不能超过100个字符。</msg>
+			<msg lsid="EN">Parameter name cannot exceed 100 characters.</msg>
+		</check>
+	</rule>
+</adb>

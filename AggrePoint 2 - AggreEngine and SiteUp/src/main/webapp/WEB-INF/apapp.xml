@@ -1,0 +1,619 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<webapp>
+	<!-- 环境参数定义 -->
+	<param name="servername" value="AE" />
+	<param name="system.http.maxConnections" value="50" />
+	<param name="system.oracle.jdbc.J2EE13Compliant" value="true" />
+
+	<!-- 需要动态加载的类的定义 -->
+	<dynamic_load></dynamic_load>
+
+	<!-- 插件，包括用户身份引擎模块，个性化引擎模块，日志模块的定义 -->
+	<plugin>
+		<user id="default" module="com.aggrepoint.ae.plugin.AEUserEngine"
+			default="y" />
+		<user id="siteup" module="com.aggrepoint.adk.plugin.WinletUserEngine" />
+		<psn id="default" module="com.aggrepoint.ae.plugin.AEPsnEngine"
+			default="y" />
+		<psn id="su" module="com.aggrepoint.adk.plugin.WinletPsnEngine" />
+		<logger id="default" module="com.aggrepoint.ae.core.plugin.AELogger"
+			default="y" />
+	</plugin>
+
+	<!-- 响应码级别定义。定义各个级别使用的日志模块，以及对数据库连接的处理方式，级别高表示异常情况 -->
+	<retcode_level>
+		<level id="0" db="c" desc="处理成功">
+			<logger id="default" />
+		</level>
+		<level id="1" db="r" desc="业务异常" default="y">
+			<logger id="default" />
+		</level>
+		<level id="9" db="r" desc="系统异常">
+			<logger id="default" />
+		</level>
+	</retcode_level>
+
+	<!-- 全局返回码定义 -->
+	<retcode throw="java.lang.Exception" level="9" lmsg="execute failed"
+		umsg="对不起，出错啦！" url="/WEB-INF/ae/html/errormsg.jsp" winmode="hide">
+	</retcode>
+	<retcode id="9001" level="9" lmsg="init failed"
+		umsg="System is busy now, please try again later." url="/WEB-INF/ae/html/errormsg.jsp">
+		<psn_retcode rule="=(request.localeset, CN)" umsg="对不起，现在系统繁忙，请稍候再试。" />
+	</retcode>
+	<retcode id="9002" level="9" lmsg="resource not found"
+		umsg="Sorry, the page you want to view does not exists." url="/WEB-INF/ae/html/errormsg.jsp">
+		<psn_retcode rule="=(request.localeset, CN)" umsg="对不起，您访问的页面不存在。" />
+	</retcode>
+	<retcode id="9003" level="9" lmsg="pre execute error" umsg="对不起，出错啦！"
+		url="/WEB-INF/ae/html/errormsg.jsp">
+	</retcode>
+	<retcode id="9004" level="9" lmsg="present failed" umsg="对不起，出错啦！"
+		url="/WEB-INF/ae/html/errormsg.jsp">
+	</retcode>
+
+	<retcode id="8000" lmsg="隐藏" winmode="hide" />
+	<retcode id="8001" level="1" lmsg="not login" umsg="Please login."
+		method="f" url="/WEB-INF/ae/html/errormsg.jsp">
+		<psn_retcode rule="=(request.localeset, CN)" umsg="请登录。" />
+	</retcode>
+	<retcode id="8002" level="1" lmsg="no right to access"
+		umsg="Sorry, you are not authorized." url="/WEB-INF/ae/html/errormsg.jsp">
+		<psn_retcode rule="=(request.localeset, CN)" umsg="对不起，您无权访问。" />
+	</retcode>
+
+	<!-- 8500区段仅用于AggrePoint -->
+	<retcode id="8500" level="1" lmsg="go home" method="p" url="/home" />
+	<retcode id="8501" level="1" lmsg="not login" method="p" url="/login" />
+	<retcode id="8502" level="1" lmsg="no right to access" method="p"
+		url="/noaccess" />
+
+	<!-- 初始化AggrePoint -->
+	<uri module="com.aggrepoint.ae.Initer" load="y">
+		<param name="uniquelink" value="n" />
+	</uri>
+
+	<!-- 站点页面访问入口 -->
+	<uri path="site" module="com.aggrepoint.ae.AccessPointProcess"
+		load="y" expand_match="y">
+		<retcode id="0" lmsg="页面访问处理完毕，转响应处理" method="p" url="/!present" />
+		<retcode id="1" lmsg="执行窗口动作后用户身份改变，需重新计算要返回的页面" method="p"
+			url="/!reload" />
+		<retcode id="2" lmsg="执行窗口动作后标记类型改变，需重新计算要返回的页面" method="p"
+			url="/!reload" />
+		<retcode id="10" lmsg="页面中包含的窗口在显示过程中改变了用户身份，需重新计算要返回的页面" method="p"
+			url="/!reload" />
+		<retcode id="100" level="1" lmsg="处理出错" />
+
+		<!-- AEUrlParamConst -->
+		<logparam name="_w" />
+		<logparam name="_wv" />
+		<logparam name="_a" />
+		<logparam name="_r" />
+		<logparam name="_p" />
+		<logparam name="ae_remote_addr" />
+		<logparam name="ae_request_uri" />
+	</uri>
+
+	<uri path="rp" module="com.aggrepoint.ae.ResourceProxy"
+		expand_match="y" load="y">
+		<retcode id="0" lmsg="成功代理应用资源访问" />
+		<retcode id="-1" lmsg="找不到代理的资源" />
+		<retcode id="-2" lmsg="代理应用资源访问出错" />
+	</uri>
+
+	<!-- 执行窗口动作后如果用户身份改变了或者标记语言改变了，而且要返回整个页面内容，则需要重新计算要返回的页面 -->
+	<uri path="!reload" module="com.aggrepoint.ae.AccessPointProcess"
+		load="y">
+		<param name="reloadPage" value="y" />
+
+		<retcode id="0" lmsg="页面重新计算完毕，转响应处理" method="p" url="/!present" />
+		<retcode id="1" level="1" lmsg="处理出错" />
+	</uri>
+
+	<!-- 返回响应 -->
+	<uri path="!present" module="com.aggrepoint.ae.AccessPointPresent"
+		load="y">
+		<!-- 所有Ajax响应代码都以1结尾，非Ajax响应码以0结尾 -->
+		<retcode id="10" lmsg="页面找不到，跳转分支首页" method="rc" />
+		<retcode id="11" lmsg="页面找不到，跳转分支首页(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="20" lmsg="页面找不到，并且页面对应分支也找不到，不返回内容" />
+
+		<retcode id="30" lmsg="尝试发布非静态页面，不返回内容" />
+
+		<retcode id="40" lmsg="未登陆用户无权访问，跳转分支登陆页面" method="rc" />
+		<retcode id="41" lmsg="未登陆用户无权访问，跳转分支登陆页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="50" lmsg="已登陆用户无权访问，跳转分支无权访问页面" method="rc" />
+		<retcode id="51" lmsg="已登陆用户无权访问，跳转分支无权访问页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="60" lmsg="用户访问根页面，但站点指定了缺省的主页面，将用户重定向到主页面"
+			method="rc" />
+		<retcode id="61" lmsg="用户访问根页面，但站点指定了缺省的主页面，将用户重定向到主页面(Ajax模式)"
+			url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="70" lmsg="跳转子页面" method="rc" />
+		<retcode id="71" lmsg="跳转子页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="80" lmsg="需跳转子页面但子页面找不到，不返回内容" />
+
+		<retcode id="90" lmsg="显示页面" method="fc" />
+
+		<retcode id="100" lmsg="窗口找不到，跳转分支首页" method="rc" />
+		<retcode id="101" lmsg="窗口找不到，跳转分支首页(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="110" lmsg="显示窗口资源" />
+		<retcode id="111" lmsg="显示窗口资源后重定向" method="rc" />
+
+		<retcode id="120" lmsg="更新窗口状态后返回整个窗口内容" method="fc" />
+		<retcode id="121" lmsg="更新窗口状态后返回响应(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="130" lmsg="非Ajax模式不能访问窗口内容，跳转分支首页" method="rc" />
+		<retcode id="131" lmsg="显示窗口内容(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+		<retcode id="135" lmsg="非Ajax模式不能访问内容，跳转分支首页" method="rc" />
+		<retcode id="136" lmsg="显示内容(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="140" lmsg="执行窗口动作后跳转指定页面" method="rc" />
+		<retcode id="141" lmsg="执行窗口动作后跳转指定页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+		<retcode id="145" lmsg="执行窗口动作后跳转指定URL" method="rc" />
+		<retcode id="146" lmsg="执行窗口动作后跳转指定URL(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="147" lmsg="以Multipart请求执行窗口动作后刷新页面" method="rc" />
+
+		<retcode id="150" lmsg="执行窗口动作后返回页面内容" method="fc" />
+
+		<retcode id="161" lmsg="执行窗口动作后刷新整个页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="163" lmsg="执行窗口动作后用户身份改变，刷新整个页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="165" lmsg="执行窗口动作后标记类型改变，刷新整个页面(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="171" lmsg="执行Ajax数据校验" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="181" lmsg="执行窗口动作后返回页面内容(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+
+		<retcode id="191" lmsg="执行窗口动作后使用对话框(Ajax模式)" url="/WEB-INF/ae/html/ajax_response.jsp" />
+	</uri>
+
+	<uri path="page" module="com.aggrepoint.ae.ViewPageChannel" load="y"
+		expand_match="y">
+		<retcode id="0" lmsg="成功显示页面" method="fc" />
+		<retcode id="1001" lmsg="未指定页面" />
+		<retcode id="1002" lmsg="页面找不到" />
+		<retcode id="1003" lmsg="不能发布" />
+		<retcode id="1004" lmsg="处理异常" />
+		<retcode id="1005" lmsg="找不到模板" />
+		<retcode id="1006" lmsg="模板未发布" />
+		<retcode id="1007" lmsg="未指定查看模式" />
+
+		<logparam name="vpm" />
+	</uri>
+
+	<uri path="res">
+		<retcode id="0" lmsg="成功显示文件" logger="null" />
+		<retcode id="1001" lmsg="未指定文件" />
+		<retcode id="1002" lmsg="文件找不到" />
+		<retcode id="1003" lmsg="输出错误，可能是客户端中断连接" />
+		<retcode id="1004" lmsg="处理异常" />
+		<retcode id="1005" lmsg="文件所属的对象找不到" />
+
+		<uri path="img" module="com.aggrepoint.ae.ViewImage" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+
+			<logparam name="id" />
+		</uri>
+		<uri path="res" module="com.aggrepoint.ae.ViewResDirect"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+		<uri path="cont" module="com.aggrepoint.ae.ViewResContent"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+		<uri path="tmpl" module="com.aggrepoint.ae.ViewResTemplate"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+		<uri path="frame" module="com.aggrepoint.ae.ViewResFrame"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+		<uri path="cpage" module="com.aggrepoint.ae.ViewResCPage"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+		<uri path="app" module="com.aggrepoint.ae.ViewResApp"
+			expand_match="y" load="y">
+			<param name="cache_total_limit" value="10485760" />
+			<param name="cache_unit_limit" value="1048576" />
+			<param name="cache_valid_time" value="5000" />
+		</uri>
+	</uri>
+
+	<uri path="utils">
+		<win path="iframe" module="com.aggrepoint.ae.winlet.IFrameWinlet" scope="page" />
+	</uri>
+
+	<uri path="app" psn_engine="su">
+		<uri path="su">
+			<retcode id="1001" lmsg="未指定站点页面编号" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="1002" lmsg="未指定站点页面的父页面编号" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="1003" lmsg="指定的站点页面不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="1004" lmsg="指定的站点页面的父页面不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="1005" lmsg="加载站点页面所属的栏目失败" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="1006" lmsg="没有可用的模板" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="2001" lmsg="未指定要编辑的内容" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="2002" lmsg="指定的内容不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="2003" lmsg="指定的站点不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="2004" lmsg="指定的分类不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="2101" lmsg="未指定栏位" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="3001" lmsg="未指定要编辑的页面" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="3002" lmsg="未指定页面所属栏目" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="3003" lmsg="指定的页面不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="3004" lmsg="指定的栏目不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			<retcode id="4000" lmsg="数据不完整" url="/WEB-INF/ae/html/errormsg.jsp" />
+
+			<uri path="bpageedit" module="com.aggrepoint.su.BPageEdit">
+				<retcode id="0" lmsg="成功显示站点页面编辑页面" url="/WEB-INF/su/html/bpage/pageedit.jspx" />
+			</uri>
+
+			<uri path="bpageeditsave" module="com.aggrepoint.su.BPageEdit"
+				method="save">
+				<retcode id="0" lmsg="成功更新站点页面" url="/WEB-INF/su/html/bpage/done.jsp" />
+				<retcode id="1" lmsg="输入校验失败" url="/WEB-INF/su/html/bpage/pageedit.jspx" />
+			</uri>
+
+			<uri path="psntmpledit" module="com.aggrepoint.su.BPagePsnTmpl">
+				<retcode id="0" lmsg="成功显示站点页面个性化模版编辑页面" url="/WEB-INF/su/html/bpage/psntmpledit.jspx" />
+			</uri>
+
+			<uri path="psntmpleditsave" module="com.aggrepoint.su.BPagePsnTmpl"
+				method="save">
+				<retcode id="0" lmsg="成功保存页面个性化模版设置" url="/WEB-INF/su/html/bpage/done.jsp" />
+			</uri>
+
+			<uri path="bpagedel" module="com.aggrepoint.su.BPageDel">
+				<retcode id="0" lmsg="成功删除站点页面" method="rc" />
+			</uri>
+
+			<uri path="bpagemove" module="com.aggrepoint.su.BPageMove">
+				<retcode id="0" lmsg="成功移动站点页面" method="rc" />
+			</uri>
+
+			<uri path="bpagecontdel" module="com.aggrepoint.su.BPageContAction">
+				<logparam name="contid" />
+				<retcode id="1" lmsg="未指定要删除的内容" method="rc" />
+				<retcode id="0" lmsg="成功删除页面内容" method="rc" />
+			</uri>
+
+			<uri path="bpagecontmove" module="com.aggrepoint.su.BPageContAction"
+				method="move">
+				<logparam name="contid" />
+				<logparam name="step" />
+				<retcode id="1" lmsg="未指定要移动的内容" method="rc" />
+				<retcode id="0" lmsg="成功移动页面内容" method="rc" />
+			</uri>
+
+			<uri path="bpagecontdrag" module="com.aggrepoint.su.BPageContAction"
+				method="drag">
+				<logparam name="contid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<logparam name="oncontid" />
+				<logparam name="isbefore" />
+				<retcode id="1" lmsg="未指定要拖动的内容" method="rc" />
+				<retcode id="0" lmsg="成功拖动页面内容" method="rc" />
+			</uri>
+
+			<uri path="contins_selcat" module="com.aggrepoint.su.BPageContInsert">
+				<logparam name="pid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<retcode id="0" lmsg="成功显示内容分类选择页面" url="/WEB-INF/su/html/bpage/contselcat.jspx" />
+			</uri>
+
+			<uri path="contins_sel" module="com.aggrepoint.su.BPageContInsert"
+				method="sel">
+				<logparam name="pid" />
+				<logparam name="cid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<retcode id="0" lmsg="成功显示内容选择页面" url="/WEB-INF/su/html/bpage/contsel.jspx" />
+				<retcode id="1" lmsg="未指定内容分类" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="contins_insert" module="com.aggrepoint.su.BPageContInsert"
+				method="insert">
+				<logparam name="pid" />
+				<logparam name="contid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<retcode id="0" lmsg="成功插入内容" url="/WEB-INF/su/html/bpage/done.jsp" />
+				<retcode id="1" lmsg="未指定要插入的内容" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="winins_sel" module="com.aggrepoint.su.BPageWinInsert">
+				<logparam name="pid" />
+				<logparam name="providerid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<retcode id="0" lmsg="成功显示窗口选择页面" url="/WEB-INF/su/html/bpage/winsel.jspx" />
+				<retcode id="1" lmsg="未指定应用提供商" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="winins_param" module="com.aggrepoint.su.BPageWinInsert"
+				method="param">
+				<logparam name="pid" />
+				<logparam name="winid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<retcode id="0" lmsg="成功显示插入窗口参数选择页面" url="/WEB-INF/su/html/bpage/winparam.jsp" />
+				<retcode id="1" lmsg="未指定要插入的窗口" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="winins_insert" module="com.aggrepoint.su.BPageWinInsert"
+				method="insert">
+				<logparam name="pid" />
+				<logparam name="winid" />
+				<logparam name="areaname" />
+				<logparam name="zoneid" />
+				<logparam name="frameid" />
+				<logparam name="accessrule" />
+				<retcode id="0" lmsg="成功插入窗口" url="/WEB-INF/su/html/bpage/done.jsp" />
+				<retcode id="1" lmsg="未指定要插入的窗口" url="/WEB-INF/ae/html/errormsg.jsp" />
+				<retcode id="2" lmsg="未指定窗框" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="winedit" module="com.aggrepoint.su.BPageWinEdit"
+				method="edit">
+				<logparam name="contid" />
+				<retcode id="0" lmsg="成功显示窗口内容编辑页面" url="/WEB-INF/su/html/bpage/winparam.jsp" />
+				<retcode id="1" lmsg="指定的窗口不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="winedit_update" module="com.aggrepoint.su.BPageWinEdit"
+				method="update">
+				<logparam name="contid" />
+				<logparam name="frameid" />
+				<logparam name="accessrule" />
+				<retcode id="0" lmsg="成功更新窗口" url="/WEB-INF/su/html/bpage/done.jsp" />
+				<retcode id="1" lmsg="指定的窗口不存在" url="/WEB-INF/ae/html/errormsg.jsp" />
+			</uri>
+
+			<uri path="setlayout" module="com.aggrepoint.su.BPageSetLayout">
+				<retcode id="0" lmsg="成功显示布局选择页面" url="/WEB-INF/su/html/bpage/setlayout.jspx" />
+			</uri>
+
+			<uri path="setlayoutgo" module="com.aggrepoint.su.BPageSetLayout"
+				method="go">
+				<retcode id="0" lmsg="成功设置布局" url="/WEB-INF/su/html/bpage/done.jsp" />
+			</uri>
+
+			<uri path="contedit" module="com.aggrepoint.su.ContentEdit">
+				<retcode id="0" lmsg="成功显示内容编辑页面" url="/WEB-INF/su/html/cont/contedit.jspx" />
+			</uri>
+
+			<uri path="conteditsave" module="com.aggrepoint.su.ContentEdit"
+				method="save">
+				<retcode id="0" lmsg="成功保存内容" url="/WEB-INF/su/html/cont/editdone.jsp" />
+			</uri>
+
+			<uri path="contlistres" module="com.aggrepoint.su.ContentEdit"
+				method="listRes">
+				<retcode id="0" lmsg="成功显示资源列表页面" url="/WEB-INF/su/html/cont/reslist.jspx" />
+			</uri>
+
+			<uri path="contaddres" module="com.aggrepoint.su.ContentEdit"
+				method="addRes" accept_file="y" max_file_size="1024" max_file_num="1">
+				<retcode id="0" lmsg="成功上传新资源" url="/WEB-INF/su/html/cont/reslist.jspx" />
+			</uri>
+
+			<uri path="psnnameedit" module="com.aggrepoint.su.BPagePsnName">
+				<retcode id="0" lmsg="成功显示页面个性化名称编辑页面" url="/WEB-INF/su/html/bpage/psnnameedit.jspx" />
+			</uri>
+
+			<uri path="psnnamesave" module="com.aggrepoint.su.BPagePsnName"
+				method="save">
+				<retcode id="0" lmsg="成功更新个性化名称" url="/WEB-INF/su/html/bpage/done.jsp" />
+			</uri>
+
+			<uri path="cpageedit" module="com.aggrepoint.su.CPageEdit">
+				<logparam name="pid" />
+				<logparam name="channelid" />
+
+				<retcode id="0" lmsg="成功显示栏目页面编辑页面" url="/WEB-INF/su/html/cpage/edit.jsp" />
+			</uri>
+
+			<uri path="cpageeditsave" module="com.aggrepoint.su.CPageEdit"
+				method="save">
+				<logparam name="pid" />
+				<logparam name="channelid" />
+				<logparam name="title" />
+
+				<retcode id="0" lmsg="成功更新栏目页面" url="/WEB-INF/su/html/cpage/editdone.jsp" />
+			</uri>
+
+			<uri path="cpageselres" module="com.aggrepoint.su.CPageEdit"
+				method="selRes">
+				<logparam name="pid" />
+				<logparam name="channelid" />
+
+				<retcode id="0" lmsg="成功显示选择资源页面" url="/WEB-INF/su/html/cpage/selres.jsp" />
+			</uri>
+
+			<uri path="cpagenewres" module="com.aggrepoint.su.CPageEdit"
+				method="newRes" accept_file="y" max_file_size="1024" max_file_num="1">
+				<logparam name="pid" />
+				<logparam name="channelid" />
+
+				<retcode id="0" lmsg="成功插入新资源" url="/WEB-INF/su/html/cpage/newresdone.jsp" />
+				<retcode id="1" lmsg="成功插入新资源" url="/WEB-INF/su/html/cpage/selres.jsp" />
+			</uri>
+
+			<uri path="cpagekwsel" module="com.aggrepoint.su.CPageEdit"
+				method="selKeyword">
+				<retcode id="0" lmsg="成功显示关键字选择页面" url="/WEB-INF/su/html/cpage/selkeyword.jsp" />
+			</uri>
+
+			<uri path="cpagesrcsel" module="com.aggrepoint.su.CPageEdit"
+				method="selSource">
+
+				<retcode id="0" lmsg="成功显示信息来源选择页面" url="/WEB-INF/su/html/cpage/selsource.jsp" />
+			</uri>
+
+			<uri path="contimgjs" module="com.aggrepoint.su.ContentResJs"
+				method="listImage">
+				<logparam name="cid" />
+
+				<retcode id="-1" lmsg="没有指定内容" />
+				<retcode id="-2" lmsg="指定的内容找不到" />
+				<retcode id="0" lmsg="成功返回内容可选图片列表" url="/WEB-INF/su/html/cont/imagelist.jsp" />
+			</uri>
+
+			<uri path="contmediajs" module="com.aggrepoint.su.ContentResJs"
+				method="listMedia">
+				<logparam name="cid" />
+
+				<retcode id="-1" lmsg="没有指定内容" />
+				<retcode id="-2" lmsg="指定的内容找不到" />
+				<retcode id="0" lmsg="成功返回内容可选媒体列表" url="/WEB-INF/su/html/cont/medialist.jsp" />
+			</uri>
+		</uri>
+
+		<msg name="logoformatwrong" text="对不起，图片格式只能是JPEG或者GIF。">
+			<psn_msg rule="=(request.localeset, EN)" text="Logo file format should be JPEG or GIF." />
+		</msg>
+
+		<msg name="logotoolarge" text="对不起，上传的图片太大。">
+			<psn_msg rule="=(request.localeset, EN)" text="Logo exceed size limitation." />
+		</msg>
+
+		<!-- 用户登录和退出 -->
+		<win path="login" module="com.aggrepoint.su.user.LoginLogout"
+			user_engine="siteup" />
+
+		<!-- 已登录用户信息 -->
+		<win path="userinfo" module="com.aggrepoint.su.winlet.UserInfo"
+			user_engine="siteup" />
+
+		<!-- SiteUp: 站点选择 -->
+		<win path="su_sitesel" module="com.aggrepoint.su.winlet.SiteMan"
+			view="siteselect" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_siteman" module="com.aggrepoint.su.winlet.SiteMan"
+			view="site" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+
+		<!-- SiteUp: 资源管理 -->
+		<win path="su_restree" module="com.aggrepoint.su.winlet.ResTree"
+			scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, res))' />
+		<win path="su_resman" module="com.aggrepoint.su.winlet.ResMan"
+			view="main" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, res))' />
+
+		<!-- SiteUp: 分支管理窗口 -->
+		<win path="su_branch_tree" module="com.aggrepoint.su.winlet.BranchTree"
+			user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_branch" module="com.aggrepoint.su.winlet.BranchMan"
+			view="branch" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_group" module="com.aggrepoint.su.winlet.BranchMan"
+			view="group" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_map" module="com.aggrepoint.su.winlet.BranchMan"
+			view="map" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_page" module="com.aggrepoint.su.winlet.BranchPageMan"
+			view="pg" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_page_sub" module="com.aggrepoint.su.winlet.BranchPageMan"
+			view="sub" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+		<win path="su_branch_page_cont" module="com.aggrepoint.su.winlet.BranchPageMan"
+			view="cont" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, site))' />
+
+		<!-- 应用管理 -->
+		<win path="su_app_tree" module="com.aggrepoint.su.winlet.AppTree"
+			user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, app))' />
+		<win path="su_app_app" module="com.aggrepoint.su.winlet.AppMan"
+			view="app" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, app))' />
+		<win path="su_app_res" module="com.aggrepoint.su.winlet.AppMan"
+			view="res" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, app))' />
+		<win path="su_app_win" module="com.aggrepoint.su.winlet.AppMan"
+			view="win" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, app))' />
+		<win path="su_app_param" module="com.aggrepoint.su.winlet.AppMan"
+			view="param" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, app))' />
+
+		<!-- SiteUp: 模板管理窗口 -->
+		<win path="su_tmpl_tree" module="com.aggrepoint.su.winlet.TmplTree"
+			user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, tmpl))' />
+		<win path="su_tmpl_tmpl" module="com.aggrepoint.su.winlet.TmplMan"
+			view="template" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, tmpl))' />
+		<win path="su_tmpl_param" module="com.aggrepoint.su.winlet.TmplMan"
+			view="param" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, tmpl))' />
+		<win path="su_tmpl_res" module="com.aggrepoint.su.winlet.TmplMan"
+			view="res" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, tmpl))' />
+
+		<!-- SiteUp: 窗框管理窗口 -->
+		<win path="su_frame_tree" module="com.aggrepoint.su.winlet.FrameMan"
+			view="frameselect" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, frame))' />
+		<win path="su_frame_frame" module="com.aggrepoint.su.winlet.FrameMan"
+			view="frame" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, frame))' />
+		<win path="su_frame_res" module="com.aggrepoint.su.winlet.FrameMan"
+			view="res" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, frame))' />
+
+		<!-- SiteUp: 布局管理窗口 -->
+		<win path="su_layout_tree" module="com.aggrepoint.su.winlet.LayoutMan"
+			view="layoutselect" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, layout))' />
+		<win path="su_layout_layout" module="com.aggrepoint.su.winlet.LayoutMan"
+			view="layout" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, layout))' />
+
+		<!-- SiteUp: 内容管理窗口 -->
+		<win path="su_cont_tree" module="com.aggrepoint.su.winlet.ContMan"
+			view="catselect" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, cont))' />
+		<win path="su_cont_cat" module="com.aggrepoint.su.winlet.ContMan"
+			view="cat" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, cont))' />
+		<win path="su_cont_cont" module="com.aggrepoint.su.winlet.ContMan"
+			view="cont" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, cont))' />
+		<win path="su_cont_edit" module="com.aggrepoint.su.winlet.ContEdit"
+			view="edit" scope="page" user_engine="siteup"
+			access_rule='or(contains(user.su_roles, root), contains(user.su_roles, cont))' />
+
+		<!-- SiteUp: User Agent管理 -->
+		<win path="su_ua" module="com.aggrepoint.su.UAgent" user_engine="siteup" />
+	</uri>
+</webapp>

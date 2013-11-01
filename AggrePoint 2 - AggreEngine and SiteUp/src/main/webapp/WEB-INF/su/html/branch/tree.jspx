@@ -1,0 +1,61 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:jstree name="branchtree" rootid="0" width="300px" />
+
+	<script type="text/javascript">
+	<![CDATA[
+	$(function () {
+   		if ($("#${adk:encodens('branchtree')}").jstree == undefined)
+   			window.setTimeout(arguments.callee, 300);
+   		else {
+			$("#${adk:encodens('branchtree')}").jstree({
+				"json_data" : {
+					"data" : [{
+							"attr" : {
+								"id" : "0",
+								"rel": "root"},
+							"data" : {
+								"title" : "分支",
+								"attr" : { "href" : "${selRoot}"}},
+							"state" : "closed"}],
+					"ajax" : {
+						"url" : "${adk:resproxy('getNodeContent')}",
+						"data" : function (n) { 
+							return { 
+								nid : n.attr ? n.attr("id") : 0, 
+								rand : new Date().getTime()
+							}; 
+						}
+					}
+				},
+				"types" : {
+					"valid_children" : [ "root" ],
+					"types" : {
+						"root" : {
+							"valid_children" : [ "branch" ]
+						},
+						"branch" : {
+							"icon" : {"image" : "${adk:resurl('/su/images/site.gif')}"},
+							"valid_children" : [ "default" ]
+						},
+						"default" : {
+							"valid_children" : [ "default" ]
+						}
+					}
+				},
+				"plugins" : [ "themes", "json_data", "types", "cookies" ],
+				"cookies" : {save_opened: "${adk:encodens('branchtree')}_opened", save_selected: "${adk:encodens('branchtree')}_selected"}
+			});
+   		}
+	});
+	]]>
+	</script>
+</jsp:root>

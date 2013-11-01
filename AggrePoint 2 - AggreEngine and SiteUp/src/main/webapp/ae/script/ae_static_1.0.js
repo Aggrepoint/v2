@@ -1,0 +1,1 @@
+$(document).ready(function(){if(typeof $.datepicker=="undefined"){window.setTimeout(arguments.callee,100)}else{AeJSEngine.initStatic()}});

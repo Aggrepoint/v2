@@ -1,0 +1,66 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:input="urn:jsptagdir:/WEB-INF/tags/adk/html/input">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:form name="frmCancel" action="cancelTemplateEdit">
+		<adk:func name="cancel" submit="yes" />
+	</adk:form>
+
+	<adk:form name="frmSave" action="saveTemplate" vaction="saveTemplate" resetref="${EDIT}" enctype="multipart/form-data">
+	<table width="100%" align="center" border="0" cellspacing="1" cellpadding="2">
+		<tr>
+			<td width="10%" align="right">模板名称:</td>
+			<td width="23%">
+				<input:text name="name" object="${EDIT}" property="m_strTmplName" width="20" maxlength="100" error="请输入模板名称。" validate="validate" />
+			</td>
+			<td width="10%" align="right">标记:</td>
+			<td width="23%">
+				<c:forEach var="markup" items="${EDIT.markups}">
+					<input:radio name="markup" object="${EDIT}" property="markupId" value="${markup.strId}" />${markup}
+				</c:forEach>
+			</td>
+			<td width="10%" align="right">顺序:</td>
+			<td width="23%">
+				<input:number name="order" object="${EDIT}" property="m_iOrder" width="5" maxlength="5" error="请输入顺序。" validate="validate" />
+			</td>
+		</tr>
+		<tr>
+			<td align="right" valign="top">预览:</td>
+			<td colspan="5">
+				<input:file name="preview" width="30" validate="validate" />
+				<c:if test="${EDIT.previewImgId gt 0}">
+				<br/><img src="/ap2/res/img?id=${EDIT.previewImgId} "/>
+				</c:if>
+			</td>
+		</tr>
+		<tr>
+			<c:choose>
+				<c:when test="${m.m_strCrawlUrl ne null}">
+					<td align="right" valign="tpo">URL:</td>
+					<td colspan="5">
+						<input:text name="url" property="m_strCrawlUrl" size="100" maxlength="100" error="请输入抓取URL。" validate="validate" />
+					</td>
+				</c:when>
+				<c:otherwise>
+					<td align="right" valign="tpo">模板:</td>
+					<td colspan="5">
+						<input:textarea name="tmpl" object="${EDIT}" property="content" error="请输入模板内容" rows="20" cols="100" validate="validate"></input:textarea>
+					</td>
+				</c:otherwise>
+			</c:choose>
+		</tr>
+		<tr>
+			<td colspan="6" align="center">
+				<button type="submit">保存</button>
+				<button type="button" onclick="${adk:func('cancel')}()">取消</button>
+			</td>
+		</tr>
+	</table>
+	</adk:form>
+</jsp:root>

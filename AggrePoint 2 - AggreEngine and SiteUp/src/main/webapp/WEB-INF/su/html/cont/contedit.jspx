@@ -1,0 +1,110 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:内容编辑@EN:Content Edit]">
+		<form name="frmEdit" action="/ap2/app/su/contlistres" method="post">
+			<input type="hidden" name="contid" value="${CONTENT.id}" />
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+			<input type="hidden" name="container" value="${CONTAINER}" />
+
+			<button type="submit" class="adk_btn adk_btnsilver__normal">内容资源</button>
+		</form>
+
+		<hr size="1" width="100%" style="color:#72a9d3;background-color:#72a9d3;border-color:#72a9d3" />
+
+		<form name="frmEdit" action="/ap2/app/su/conteditsave" method="post">
+			<input type="hidden" name="contid" value="${CONTENT.id}" />
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+			<input type="hidden" name="container" value="${CONTAINER}" />
+
+			<table border="0" cellspacing="0" cellpadding="1" align="center">
+				<tr>
+					<td width="5%" nowrap="nowrap" align="right">[@CN:名称：@EN:Name:]</td>
+					<td nowrap="nowrap">
+						<input type="text" name="name" value="${CONTENT.name}" size="20" />
+					</td>
+					<td width="5%" nowrap="nowrap" align="right">[@CN:继承：@EN:Inherit:]</td>
+					<td  nowrap="nowrap">
+						<adk:element elm="input" type="radio" name="inherit" value="0">
+							<adk:attr name="checked" value="checked" test="${not PAGECONT.inherit}"/>
+						</adk:element>
+						[@CN:不继承给子栏目页面@EN:No]
+						<adk:element elm="input" type="radio" name="inherit" value="1">
+							<adk:attr name="checked" value="checked" test="${PAGECONT.inherit}"/>
+						</adk:element>
+						[@CN:继承给子栏目页面@EN:Yes]
+					</td>
+				</tr>
+				<tr>
+					<td width="5%" nowrap="nowrap" align="right">[@CN:说明：@EN:Description:]</td>
+					<td colspan="3" nowrap="nowrap">
+						<textarea name="desc" cols="80" style="width: 100%" rows="1" wrap="OFF">${CONTENT.desc}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td width="5%" nowrap="nowrap" align="right">[@CN:访问规则：@EN:Access Rule:]</td>
+					<td colspan="3" nowrap="nowrap">
+						<input type="text" name="accessrule" value="${CONTENT.accessRule}" size="80" />
+					</td>
+				</tr>
+				<tr>
+					<td width="5%" nowrap="nowrap" align="right">[@CN:内容：@EN:Content:]</td>
+					<td colspan="3" nowrap="nowrap">
+						<textarea id="tinymce" name="content" rows="25" cols="80" style="width: 100%" class="tinymce">${adk:textareaencode(CONTENT.content)}</textarea>
+					</td>
+				</tr>
+			</table>
+		</form>
+	
+		<script	language="javascript" src="/ap2/su/script/tiny_mce/jquery.tinymce.js">function a(){}</script>
+	
+		<script type="text/javascript">
+		<![CDATA[
+	   	$(function () {
+			if ($('textarea.tinymce').tinymce == undefined)
+				window.setTimeout(arguments.callee, 300);
+			else {
+				$('textarea.tinymce').tinymce({
+					// Location of TinyMCE script
+					script_url : '/ap2/su/script/tiny_mce/tiny_mce.js',
+	
+					content_css : "${STYLES}",
+
+					// General options
+            		language : "zh-cn",
+					theme : "advanced",
+					plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,advlist",
+					// Theme options
+					theme_advanced_buttons1 : "fullscreen,|,save,newdocument,|,undo,redo,|,cut,copy,paste,pastetext,pasteword,|,bold,italic,underline,strikethrough,|,outdent,indent,blockquote,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+					theme_advanced_buttons2 : "bullist,numlist,|,tablecontrols,|,search,replace,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+					theme_advanced_buttons3 : "hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,advhr,|,print,|,ltr,rtl,|,insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,pagebreak",
+					theme_advanced_toolbar_location : "top",
+					theme_advanced_toolbar_align : "left",
+					theme_advanced_statusbar_location : "bottom",
+					theme_advanced_source_editor_height : "450",
+
+					// Drop lists for link/image/media/template dialogs
+					external_image_list_url : "/ap2/app/su/contimgjs?cid=${CONTENT.id}",
+					media_external_list_url : "/ap2/app/su/contmediajs?cid=${CONTENT.id}",
+
+				    oninit : function() {  // Once initialized, tell the editor to go fullscreen
+				    	tinyMCE.get('tinymce').execCommand('mceFullScreen');
+				    }
+				});
+			}
+	  	});
+		]]>
+		</script>
+	</su:page>
+</jsp:root>

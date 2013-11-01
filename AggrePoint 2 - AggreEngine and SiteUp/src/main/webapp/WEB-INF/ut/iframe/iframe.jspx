@@ -1,0 +1,32 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<adk:element elm="iframe">
+		<adk:attr name="src" value="${SRC}" />
+		<adk:attr name="width" value="${WIDTH}" />
+		<adk:attr name="height" value="${HEIGHT}" />
+		<adk:attr name="frameborder" value="0" />
+		<c:forEach var="key" items="${OTHERS_KEY}">
+			<adk:attr name="${key}" value="${OTHERS[key]}" />
+		</c:forEach>
+	</adk:element>
+
+	<!-- 
+	<script language="javascript" src="${adk:resurl('/ut/iframe/jquery.iframe-auto-height.js')}">
+		function a() {
+		}
+	</script>
+
+	<script>
+	  $(document).ready(function () {
+	    $('iframe').iframeAutoHeight();  
+	  });
+	</script>
+	-->
+</jsp:root>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<adb>
+	<rule>
+		<check validator="str_required">
+			<arg property="m_strName" />
+
+			<msg lsid="CN">请输入窗口名称。</msg>
+			<msg lsid="EN">Please input window name.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strName" />
+			<arg value="50" />
+
+			<msg lsid="CN">窗口名称不能超过50个字符。</msg>
+			<msg lsid="EN">Window name cannot exceed 50 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strURL" />
+
+			<msg lsid="CN">请输入URL。</msg>
+			<msg lsid="EN">Please input URL.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strURL" />
+			<arg value="150" />
+
+			<msg lsid="CN">URL不能超过150个字符。</msg>
+			<msg lsid="EN">URL cannot exceed 150 characters.</msg>
+		</check>
+
+		<check validator="str_required">
+			<arg property="m_strAccessRule" />
+
+			<msg lsid="CN">请输入访问规则。</msg>
+			<msg lsid="EN">Please input access rule.</msg>
+		</check>
+
+		<check validator="str_maxlen">
+			<arg property="m_strAccessRule" />
+			<arg value="10000" />
+
+			<msg lsid="CN">访问规则不能超过10000个字符。</msg>
+			<msg lsid="EN">Access rule cannot exceed 10000 characters.</msg>
+		</check>
+	</rule>
+</adb>

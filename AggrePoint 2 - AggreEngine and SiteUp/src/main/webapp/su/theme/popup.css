@@ -1,0 +1,12 @@
+html {overflow-y: scroll;}
+body {background-color:#fcfdfd}
+form {margin:0px; padding:0px}
+* {color:#333333; font-family: Tahoma, Verdana, "雅黑", "宋体"; font-size:12px;}
+input {font-family: "雅黑", "宋体", Tahoma, Verdana}
+button {font-family: "雅黑", "宋体", Tahoma, Verdana}
+td {font-family: Tahoma, Verdana, "雅黑", "宋体"}
+
+.formLayout {background-color: #f3f3f3; border: solid 1px #a1a1a1; padding: 10px;}
+.formLayout label, .formLayout input, .formLayout span {display: block; float: left; margin-bottom: 10px;}
+.formLayout label {text-align: right; padding-right: 20px;}
+.formLayout br {clear: left;}

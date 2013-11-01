@@ -1,0 +1,42 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+	<adk:markup type="html" />
+
+	<adk:cfgnodes var="btn" path="/foot/button" flags="${FLAGS}">
+		<adk:form name="frm${adk:cfgval(btn, 'id')}"
+			action="${adk:cfgval(btn, 'action')}">
+			<adk:func name="btn_${adk:cfgval(btn, 'id')}" submit="yes" />
+		</adk:form>
+	</adk:cfgnodes>
+
+	<adk:cfgval var="infoGroup" path="/info" attr="group" />
+
+	<adk:tbody>
+	<c:forEach var="prop" items="${adk:uiprops(INFO, null, infoGroup)}">
+		<dl class="adk_dl_line">
+			<dt>${prop.label}:</dt>
+			<dd>${prop.display}</dd>
+		</dl>
+	</c:forEach>
+	<dl class="adk_dl_line">&amp;nbsp;</dl>
+
+	<c:if test="${not empty MSG}">
+		<p>
+			${MSG}
+		</p>
+	</c:if>
+
+	<center>
+		<adk:cfgnodes var="btn" path="/foot/button" flags="${FLAGS}">
+			<c:set var="funcName" value="btn_${adk:cfgval(btn, 'id')}" />
+			<button type="button" class="adk_btn adk_btnsilver__normal" onclick="${adk:func(funcName)}()">${adk:cfgval(btn, 'name')}</button>
+		</adk:cfgnodes>
+	</center>
+	</adk:tbody>
+</jsp:root>

@@ -1,0 +1,55 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:选择页面布局@EN:Select Page Layout]">
+		<style type="text/css">
+			ul.adk_ul_select li {float: left; margin: 2px}
+			ul.adk_ul_select li div { text-align: center }
+			ul.adk_ul_select li a {background:url(/ap2/su/images/gloss3.png) repeat-x scroll left center transparent; width: 150px; height: 130px;}
+			ul.adk_ul_select li a {background-color: #E9E9E9;}
+		</style>
+
+		<form id="frmSel" name="frmSel" action="/ap2/app/su/setlayoutgo" method="post">
+			<input type="hidden" name="pid" value="${PAGEID}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" id="layoutid" name="layoutid" value="0" />
+		</form>
+
+		<script type="text/javascript">
+		function selectLayout(id) {
+			document.frmSel.layoutid.value = id;
+			document.frmSel.submit();
+		}
+		</script>
+
+		<ul class="adk_ul_select">
+			<c:if test="${LAYOUTID gt 0}">
+				<li><a href="javascript:selectLayout(0)"><div>[@CN:清除布局@EN:Clear Layout]</div></a></li>
+			</c:if>
+			<c:forEach var="layout" items="${LAYOUTS}">
+			  	<c:set var="selected" value=""/>
+			  	<c:if test="${layout.id == LAYOUTID}">
+			  		<c:set var="selected" value="selected"/>
+			  	</c:if> 
+
+			  	<li class="${selected}">
+			  		<a href="javascript:selectLayout(${layout.id})"><div>
+				    ${layout.name}
+				    <c:if test="${layout.previewImgId gt 0}">
+				    	<br/>
+				    	<c:set var="path" value="/res/img?id=${layout.previewImgId}"/>
+				    	<img border="0" src="${adk:resurl(path)}"/>
+				    </c:if>
+				    </div></a>
+			    </li>
+			</c:forEach>
+		</ul>
+	</su:page>
+</jsp:root>

@@ -1,0 +1,49 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:选择窗口@EN:Select Window]">
+		<style type="text/css">
+			ul.adk_ul_select li {float: left; margin: 2px}
+			ul.adk_ul_select li div { text-align: center }
+			ul.adk_ul_select li a {width: 100px; height: 50px;}
+		</style>
+
+		<form id="frmSel" name="frmSel" action="/ap2/app/su/winins_param" method="post">
+			<input type="hidden" name="pid" value="${PAGEID}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+			<input type="hidden" name="container" value="${CONTAINER}" />
+			<input type="hidden" id="winid" name="winid" value="0" />
+		</form>
+
+		<script type="text/javascript">
+		function selectWin(id) {
+			document.frmSel.winid.value = id;
+			document.frmSel.submit();
+		}
+		</script>
+
+		<c:forEach var="app" items="${APPS}">
+		<p>
+			${app.name}
+		</p>
+		<ul class="adk_ul_select">
+			<c:forEach var="win" items="${app.windows}">
+			  	<li>
+			  		<a href="javascript:selectWin(${win.id})"><div>
+					  ${win.name}
+			  		</div></a>
+			    </li>
+			</c:forEach>
+		</ul>
+		<div style="clear:both"></div><br/>
+		</c:forEach>
+	</su:page>
+</jsp:root>

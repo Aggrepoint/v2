@@ -1,0 +1,47 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:内容资源@EN:Content Resources]">
+		<form name="frmEdit" action="/ap2/app/su/contedit" method="post">
+			<input type="hidden" name="contid" value="${CONTENT.id}" />
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+
+			<button type="submit" class="adk_btn adk_btnsilver__normal">内容编辑</button>
+		</form>
+
+		<hr size="1" width="100%" style="color:#72a9d3;background-color:#72a9d3;border-color:#72a9d3" />
+
+		<form name="frmEdit" action="/ap2/app/su/contaddres" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="contid" value="${CONTENT.id}" />
+			<input type="hidden" name="pid" value="${PAGE.id}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+
+			<input type="file" name="res" /> <button type="submit" class="adk_btn adk_btnsilver__normal">上传</button>
+		</form>
+
+		<table border="1" cellspacing="0" cellpadding="1" width="100%" align="center">
+			<tr>
+				<c:forEach var="prop" items="${adk:uiprops(RESES.source, null, 'list')}">
+					<td nowrap="nowrap">${prop.label}</td>
+				</c:forEach>
+			</tr>
+			<c:forEach var="item" items="${RESES.items}">
+				<tr>
+					<c:forEach var="prop" items="${adk:uiprops(item, null, 'list')}">
+					<td>${prop.display}</td>
+					</c:forEach>
+				</tr>
+			</c:forEach>
+		</table>
+	</su:page>
+</jsp:root>

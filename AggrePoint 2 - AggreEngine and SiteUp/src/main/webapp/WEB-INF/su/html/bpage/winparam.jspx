@@ -1,0 +1,51 @@
+<jsp:root version="2.1" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:adk="http://www.aggrepoint.com/adk"
+	xmlns:adkhtml="urn:jsptagdir:/WEB-INF/tags/adk/html"
+	xmlns:su="urn:jsptagdir:/WEB-INF/tags/su">
+	<jsp:directive.page language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+
+	<su:page title="[@CN:选择窗口@EN:Select Window]">
+		<style type="text/css">
+		#selectable .ui-selecting { background: #FECA40; }
+		#selectable .ui-selected { background: #F39814; color: white; }
+		#selectable { list-style-type: none; margin: 0; padding: 0; }
+		#selectable li { margin: 2px; padding: 5px; float: left; width: 150px; height: 130px; text-align: center; cursor:hand }
+		</style>
+		<script type="text/javascript">
+		$(function() {
+			$("#selectable").selectable({
+				stop: function(event, ui){
+					var m = $(".ui-selected", this)[0].className.match(/win(\d+) /);
+					if (m != null) {
+						document.frmSel.winid.value = m[1];
+						document.frmSel.submit();
+					}
+				}
+			});
+		});
+		</script>
+
+		<form id="frmSel" name="frmSel" action="/ap2/app/su/winins_param" method="post">
+			<input type="hidden" name="pid" value="${PAGEID}" />
+			<input type="hidden" name="areaname" value="${AREANAME}" />
+			<input type="hidden" name="zoneid" value="${ZONEID}" />
+			<input type="hidden" id="winid" name="winid" value="0" />
+		</form>
+
+		<c:forEach var="app" items="${APPS}">
+		${app.name}
+		<ol id="selectable">
+			<c:forEach var="win" items="${app.windows}">
+			  	<li class="ui-state-default win${win.id}">
+				  ${win.name}
+				  <p>${win.desc}</p>
+			    </li>
+			</c:forEach>
+		</ol>
+		</c:forEach>
+	</su:page>
+</jsp:root>
