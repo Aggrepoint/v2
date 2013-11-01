@@ -1,0 +1,62 @@
+<div class="adk_tbl">
+	<div class="adk_tbl_header">
+		<table ${table.attrs}>
+			<tr>
+				<td class="adk_tbl_summary">${table.summary}</td>
+				<td class="adk_tbl_nav">
+					<#if (table.pageno > 1)>
+						<div class='adk_tbl_first'></div><div class='adk_tbl_prev'></div>
+					</#if>
+					<#list table.startpage..table.endpage as pid>
+						<div class='adk_tbl_page<#if (pid == table.pageno)> adk_tbl_selected</#if>'>${pid}</div>
+					</#list>
+					<#if (table.pageno != table.pagecount)>
+						<div class='adk_tbl_next'></div><div class='adk_tbl_last'></div>
+					</#if>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="adk_tbl_body">
+		<table ${table.attrs}>
+			<thead>
+				<tr>
+					<#list cols as col>
+					<th ${col.attrs}>${col.title}</th>
+					</#list>
+				</tr>
+			</thead>
+			<tbody>
+				<#list rows as row>
+				<tr>
+					<#list 0..table.colcount - 1 as idx>
+					<td ${cols[idx].attrs}>
+						${row.cols[idx]}
+					</td>
+					</#list>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="adk_tbl_footer">
+		<table ${table.attrs}>
+			<tr>
+				<td class="adk_tbl_summary">${table.summary}</td>
+				<td class="adk_tbl_nav">
+					<#if (table.pageno > 1)>
+						<div class='adk_tbl_first'></div><div class='adk_tbl_prev'></div>
+					</#if>
+					<#list table.startpage..table.endpage as pid>
+						<div class='adk_tbl_page<#if (pid == table.pageno)> adk_tbl_selected</#if>'>${pid}</div>
+					</#list>
+					<#if (table.pageno != table.pagecount)>
+						<div class='adk_tbl_next'></div><div class='adk_tbl_last'></div>
+					</#if>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

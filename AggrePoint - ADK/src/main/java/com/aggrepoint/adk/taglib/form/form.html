@@ -1,0 +1,24 @@
+<#assign attrhideloading = "">
+<#if (hideloading)>
+	<#assign attrhideloading = " hideloading='yes'">
+</#if>
+<#assign attrenctype = "">
+<#if enctype??>
+	<#assign attrenctype = " enctype='" + enctype + "'">
+</#if>
+<#if (!viaae)>
+	<#assign fullaction = url + "?_adk_i=" + iid + "&_adk_v=" + vid + "&_adk_a=" + action + "&_adk_f=" + form>
+<#elseif (multipart)>
+	<#assign fullaction = url + "?_a=" + iid + "!" + vid + "!" + action + "!" + form>
+<#else>
+	<#assign fullaction = url>
+</#if>
+
+<form name="${formname}${iid}${vid}" id="${formname}${iid}${vid}" method="${method}" action="${fullaction}"${attrenctype}${attrhideloading}>
+<#if (viaae && !multipart)>
+<input type="hidden" name="_a" value="${iid}!${vid}!${action}!${form}" />
+</#if>
+${content}
+</form>
+<#if (viaae && markup != "wml")>
+</#if>
